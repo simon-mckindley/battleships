@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Simon Mckindley">
+    <meta name="description" content="">
+    <title>Battleship - Login</title>
+    <link rel="icon" href='background.png' type="image/x-icon">
+    <link id='stylecss' type="text/css" rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1 class="login-h1">Battleship</h1>
+    </header>
+
+    <main>
+
+        <form action="#" th:action="@{/login}" method="post" class="login-form">
+            <input placeholder="Enter your name" type="text" name="name" class="login-input" maxlength="15" required>
+            <select name="opponent" class="login-input" required>
+                <option value="">Select an opponent</option>
+                <option value="ai">AI</option>
+            </select>
+            <button type="submit" class="submit-button login-button">Start</button>
+        </form>
+
+    </main>
+
+</body>
+
+</html>

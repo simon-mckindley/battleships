@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Simon Mckindley">
+    <meta name="description" content="">
+    <title>Battleship - Play</title>
+    <link rel="icon" href='background.png' type="image/x-icon">
+    <link id='stylecss' type="text/css" rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Battleship</h1>
+        <p th:text="${session.name}" class="username"></p>
+        <p id="shot" class="wait">Waiting for opponent</p>
+    </header>
+
+    <main class="play-main">
+        <div class="ships grid-1">
+            <span class="">Aircraft Carrier</span>
+            <div class="hit-boxes">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="">Battleship</span>
+            <div class="hit-boxes">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="">Destroyer</span>
+            <div class="hit-boxes">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="">Submarine</span>
+            <div class="hit-boxes">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <span class="">Patrol Boat</span>
+            <div class="hit-boxes">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <form action="#" th:action="@{/shoot}" method="post" class="board grid-2">
+            <span class="label"></span>
+            <span class="label">1</span>
+            <span class="label">2</span>
+            <span class="label">3</span>
+            <span class="label">4</span>
+            <span class="label">5</span>
+            <span class="label">6</span>
+            <span class="label">7</span>
+            <span class="label">8</span>
+            <span class="label">9</span>
+            <span class="label">10</span>
+
+            <span class="label">A</span>
+            <button name="shot" value="a1" class="square"></button>
+            <button name="shot" value="a2" class="square"></button>
+            <button name="shot" value="a3" class="square"></button>
+            <button name="shot" value="a4" class="square"></button>
+            <button name="shot" value="a5" class="square"></button>
+            <button name="shot" value="a6" class="square"></button>
+            <button name="shot" value="a7" class="square"></button>
+            <button name="shot" value="a8" class="square"></button>
+            <button name="shot" value="a9" class="square"></button>
+            <button name="shot" value="a10" class="square"></button>
+
+            <span class="label">B</span>
+            <button name="shot" value="b1" class="square"></button>
+            <button name="shot" value="b2" class="square"></button>
+            <button name="shot" value="b3" class="square"></button>
+            <button name="shot" value="b4" class="square"></button>
+            <button name="shot" value="b5" class="square"></button>
+            <button name="shot" value="b6" class="square"></button>
+            <button name="shot" value="b7" class="square"></button>
+            <button name="shot" value="b8" class="square"></button>
+            <button name="shot" value="b9" class="square"></button>
+            <button name="shot" value="b10" class="square"></button>
+
+            <span class="label">C</span>
+            <button name="shot" value="c1" class="square"></button>
+            <button name="shot" value="c2" class="square"></button>
+            <button name="shot" value="c3" class="square"></button>
+            <button name="shot" value="c4" class="square"></button>
+            <button name="shot" value="c5" class="square"></button>
+            <button name="shot" value="c6" class="square"></button>
+            <button name="shot" value="c7" class="square"></button>
+            <button name="shot" value="c8" class="square"></button>
+            <button name="shot" value="c9" class="square"></button>
+            <button name="shot" value="c10" class="square"></button>
+
+            <span class="label">D</span>
+            <button name="shot" value="d1" class="square"></button>
+            <button name="shot" value="d2" class="square"></button>
+            <button name="shot" value="d3" class="square"></button>
+            <button name="shot" value="d4" class="square"></button>
+            <button name="shot" value="d5" class="square"></button>
+            <button name="shot" value="d6" class="square"></button>
+            <button name="shot" value="d7" class="square"></button>
+            <button name="shot" value="d8" class="square"></button>
+            <button name="shot" value="d9" class="square"></button>
+            <button name="shot" value="d10" class="square"></button>
+
+            <span class="label">E</span>
+            <button name="shot" value="e1" class="square"></button>
+            <button name="shot" value="e2" class="square"></button>
+            <button name="shot" value="e3" class="square"></button>
+            <button name="shot" value="e4" class="square"></button>
+            <button name="shot" value="e5" class="square"></button>
+            <button name="shot" value="e6" class="square"></button>
+            <button name="shot" value="e7" class="square"></button>
+            <button name="shot" value="e8" class="square"></button>
+            <button name="shot" value="e9" class="square"></button>
+            <button name="shot" value="e10" class="square"></button>
+
+            <span class="label">F</span>
+            <button name="shot" value="f1" class="square"></button>
+            <button name="shot" value="f2" class="square"></button>
+            <button name="shot" value="f3" class="square"></button>
+            <button name="shot" value="f4" class="square"></button>
+            <button name="shot" value="f5" class="square"></button>
+            <button name="shot" value="f6" class="square"></button>
+            <button name="shot" value="f7" class="square"></button>
+            <button name="shot" value="f8" class="square"></button>
+            <button name="shot" value="f9" class="square"></button>
+            <button name="shot" value="f10" class="square"></button>
+
+            <span class="label">G</span>
+            <button name="shot" value="g1" class="square"></button>
+            <button name="shot" value="g2" class="square"></button>
+            <button name="shot" value="g3" class="square"></button>
+            <button name="shot" value="g4" class="square"></button>
+            <button name="shot" value="g5" class="square"></button>
+            <button name="shot" value="g6" class="square"></button>
+            <button name="shot" value="g7" class="square"></button>
+            <button name="shot" value="g8" class="square"></button>
+            <button name="shot" value="g9" class="square"></button>
+            <button name="shot" value="g10" class="square"></button>
+
+            <span class="label">H</span>
+            <button name="shot" value="h1" class="square"></button>
+            <button name="shot" value="h2" class="square"></button>
+            <button name="shot" value="h3" class="square"></button>
+            <button name="shot" value="h4" class="square"></button>
+            <button name="shot" value="h5" class="square"></button>
+            <button name="shot" value="h6" class="square"></button>
+            <button name="shot" value="h7" class="square"></button>
+            <button name="shot" value="h8" class="square"></button>
+            <button name="shot" value="h9" class="square"></button>
+            <button name="shot" value="h10" class="square"></button>
+
+            <span class="label">I</span>
+            <button name="shot" value="i1" class="square"></button>
+            <button name="shot" value="i2" class="square"></button>
+            <button name="shot" value="i3" class="square"></button>
+            <button name="shot" value="i4" class="square"></button>
+            <button name="shot" value="i5" class="square"></button>
+            <button name="shot" value="i6" class="square"></button>
+            <button name="shot" value="i7" class="square"></button>
+            <button name="shot" value="i8" class="square"></button>
+            <button name="shot" value="i9" class="square"></button>
+            <button name="shot" value="i10" class="square"></button>
+
+            <span class="label">J</span>
+            <button name="shot" value="j1" class="square"></button>
+            <button name="shot" value="j2" class="square"></button>
+            <button name="shot" value="j3" class="square"></button>
+            <button name="shot" value="j4" class="square"></button>
+            <button name="shot" value="j5" class="square"></button>
+            <button name="shot" value="j6" class="square"></button>
+            <button name="shot" value="j7" class="square"></button>
+            <button name="shot" value="j8" class="square"></button>
+            <button name="shot" value="j9" class="square"></button>
+            <button name="shot" value="j10" class="square"></button>
+        </form>
+
+        <div class="grid-3">
+            <p class="small-title">Your Status</p>
+            <div class="small-board">
+                <div th:each="square : ${myBoard}" th:text="${square.getOccupied}" th:attr="id=${square.getName}" class="small-square"></div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+<script>
+	let buttons = document.getElementsByClassName("square");
+	for (butt of buttons){
+		butt.disabled = true;
+	}
+	
+    setTimeout(takeShot, 5000);
+
+    function takeShot() {
+        let shot = document.getElementById("shot");
+        shot.className = "take-shot";
+        shot.innerHTML = "Take your shot !";
+    	for (butt of buttons){
+    		butt.disabled = false;
+    	}
+        console.log("take shot function");
+    }
+</script>
+
+</html>

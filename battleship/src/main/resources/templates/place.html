@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Simon Mckindley">
+    <meta name="description" content="">
+    <title>Battleship - Place Ships</title>
+    <link rel="icon" href='background.png' type="image/x-icon">
+    <link id='stylecss' type="text/css" rel="stylesheet" href="style.css">
+    <script src='script.js' defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Battleship</h1>
+        <div class="head-info">
+            <h2>Place all your ships</h2>
+            <button id="play-button" type="submit" class="submit-button play-button" form="play">Play</button>
+        </div>
+        <p th:text="${session.name}" class="username"></p>
+    </header>
+
+    <main class="place-main">
+
+        <div class="ships">
+            <span>
+                <button onclick="rotateElement('Carrier')" class="rotate-button">
+                    <img src="rotate.png" width=15>
+                </button>
+                Aircraft Carrier (5)
+            </span>
+            <div class="ship-image carrier">
+                <img id="Carrier" src="carrier.png" width=200 class="carrier ship">
+            </div>
+
+            <span>
+                <button onclick="rotateElement('Battleship')" class="rotate-button">
+                    <img src="rotate.png" width=15>
+                </button>
+                Battleship (4)
+            </span>
+            <div class="ship-image battleship">
+                <img id="Battleship" src="battle.png" width=160 class="battleship ship">
+            </div>
+
+            <span>
+                <button onclick="rotateElement('Destroyer')" class="rotate-button">
+                    <img src="rotate.png" width=15>
+                </button>
+                Destroyer (3)
+            </span>
+            <div class="ship-image destroyer">
+                <img id="Destroyer" src="destroyer.png" width=120 class="destroyer ship">
+            </div>
+
+            <span>
+                <button onclick="rotateElement('Submarine')" class="rotate-button">
+                    <img src="rotate.png" width=15>
+                </button>
+                Submarine (3)
+            </span>
+            <div class="ship-image sub">
+                <img id="Submarine" src="sub.png" width=120 class="sub ship">
+            </div>
+
+            <span>
+                <button onclick="rotateElement('Patrol-Boat')" class="rotate-button">
+                    <img src="rotate.png" width=15>
+                </button>
+                Patrol Boat (2)
+            </span>
+            <div class="ship-image patrol">
+                <img id="Patrol-Boat" src="patrol.png" width=80 class="patrol ship">
+            </div>
+            <button class="submit-button" onclick="setShipPositions()">Set ships</button>
+        </div>
+
+        <div class="board">
+            <span class="label"></span>
+            <span class="label column">1</span>
+            <span class="label column">2</span>
+            <span class="label column">3</span>
+            <span class="label column">4</span>
+            <span class="label column">5</span>
+            <span class="label column">6</span>
+            <span class="label column">7</span>
+            <span class="label column">8</span>
+            <span class="label column">9</span>
+            <span class="label column">10</span>
+
+            <span class="label row">A</span>
+            <div id="a1" class="square"></div>
+            <div id="a2" class="square"></div>
+            <div id="a3" class="square"></div>
+            <div id="a4" class="square"></div>
+            <div id="a5" class="square"></div>
+            <div id="a6" class="square"></div>
+            <div id="a7" class="square"></div>
+            <div id="a8" class="square"></div>
+            <div id="a9" class="square"></div>
+            <div id="a10" class="square"></div>
+
+            <span class="label row">B</span>
+            <div id="b1" class="square"></div>
+            <div id="b2" class="square"></div>
+            <div id="b3" class="square"></div>
+            <div id="b4" class="square"></div>
+            <div id="b5" class="square"></div>
+            <div id="b6" class="square"></div>
+            <div id="b7" class="square"></div>
+            <div id="b8" class="square"></div>
+            <div id="b9" class="square"></div>
+            <div id="b10" class="square"></div>
+
+            <span class="label row">C</span>
+            <div id="c1" class="square"></div>
+            <div id="c2" class="square"></div>
+            <div id="c3" class="square"></div>
+            <div id="c4" class="square"></div>
+            <div id="c5" class="square"></div>
+            <div id="c6" class="square"></div>
+            <div id="c7" class="square"></div>
+            <div id="c8" class="square"></div>
+            <div id="c9" class="square"></div>
+            <div id="c10" class="square"></div>
+
+            <span class="label row">D</span>
+            <div id="d1" class="square"></div>
+            <div id="d2" class="square"></div>
+            <div id="d3" class="square"></div>
+            <div id="d4" class="square"></div>
+            <div id="d5" class="square"></div>
+            <div id="d6" class="square"></div>
+            <div id="d7" class="square"></div>
+            <div id="d8" class="square"></div>
+            <div id="d9" class="square"></div>
+            <div id="d10" class="square"></div>
+
+            <span class="label row">E</span>
+            <div id="e1" class="square"></div>
+            <div id="e2" class="square"></div>
+            <div id="e3" class="square"></div>
+            <div id="e4" class="square"></div>
+            <div id="e5" class="square"></div>
+            <div id="e6" class="square"></div>
+            <div id="e7" class="square"></div>
+            <div id="e8" class="square"></div>
+            <div id="e9" class="square"></div>
+            <div id="e10" class="square"></div>
+
+            <span class="label row">F</span>
+            <div id="f1" class="square"></div>
+            <div id="f2" class="square"></div>
+            <div id="f3" class="square"></div>
+            <div id="f4" class="square"></div>
+            <div id="f5" class="square"></div>
+            <div id="f6" class="square"></div>
+            <div id="f7" class="square"></div>
+            <div id="f8" class="square"></div>
+            <div id="f9" class="square"></div>
+            <div id="f10" class="square"></div>
+
+            <span class="label row">G</span>
+            <div id="g1" class="square"></div>
+            <div id="g2" class="square"></div>
+            <div id="g3" class="square"></div>
+            <div id="g4" class="square"></div>
+            <div id="g5" class="square"></div>
+            <div id="g6" class="square"></div>
+            <div id="g7" class="square"></div>
+            <div id="g8" class="square"></div>
+            <div id="g9" class="square"></div>
+            <div id="g10" class="square"></div>
+
+            <span class="label row">H</span>
+            <div id="h1" class="square"></div>
+            <div id="h2" class="square"></div>
+            <div id="h3" class="square"></div>
+            <div id="h4" class="square"></div>
+            <div id="h5" class="square"></div>
+            <div id="h6" class="square"></div>
+            <div id="h7" class="square"></div>
+            <div id="h8" class="square"></div>
+            <div id="h9" class="square"></div>
+            <div id="h10" class="square"></div>
+
+            <span class="label row">I</span>
+            <div id="i1" class="square"></div>
+            <div id="i2" class="square"></div>
+            <div id="i3" class="square"></div>
+            <div id="i4" class="square"></div>
+            <div id="i5" class="square"></div>
+            <div id="i6" class="square"></div>
+            <div id="i7" class="square"></div>
+            <div id="i8" class="square"></div>
+            <div id="i9" class="square"></div>
+            <div id="i10" class="square"></div>
+
+            <span class="label row">J</span>
+            <div id="j1" class="square"></div>
+            <div id="j2" class="square"></div>
+            <div id="j3" class="square"></div>
+            <div id="j4" class="square"></div>
+            <div id="j5" class="square"></div>
+            <div id="j6" class="square"></div>
+            <div id="j7" class="square"></div>
+            <div id="j8" class="square"></div>
+            <div id="j9" class="square"></div>
+            <div id="j10" class="square"></div>
+        </div>
+
+        <form id="play" name="play" action="#" th:action="@{/play}" method="post" style="display: none;">
+        	<input id="carrier-input" type="hidden" name="carrier" value="">
+        	<input id="battleship-input" type="hidden" name="battleship" value="">
+        	<input id="destroyer-input" type="hidden" name="destroyer" value="">
+        	<input id="submarine-input" type="hidden" name="submarine" value="">
+        	<input id="patrol-input" type="hidden" name="patrol" value="">
+        </form>
+
+    </main>
+
+</body>
+
+</html>

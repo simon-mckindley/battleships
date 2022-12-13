@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Arima+Madurai:wght@500&family=Halant&family=Roboto&display=swap');
+
+html {
+    --button-color: crimson;
+    --background-color: rgb(218, 218, 218);
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    position: relative;
+    padding: 0.5em 0;
+}
+
+.place-main {
+    display: flex;
+    gap: 3em;
+    position: relative;
+    width: max-content;
+    margin: 2em auto;
+}
+
+.play-main {
+    display: grid;
+    gap: 2em;
+    width: max-content;
+    margin: 2em auto;
+    grid-template-areas:
+        "gr1 gr2 gr3";
+}
+
+.grid-1 {
+    grid-area: gr1;
+}
+
+.grid-2 {
+    grid-area: gr2;
+}
+
+.grid-3 {
+    grid-area: gr3;
+}
+
+h1 {
+    color: white;
+    background-color: blue;
+    padding: 0.25em 1em;
+    margin: 0 auto;
+    width: max-content;
+    border-radius: 50px;
+}
+
+.login-h1 {
+    background-color: var(--button-color);
+}
+
+h2 {
+    margin: 0;
+    width: max-content;
+}
+
+.head-info {
+    display: flex;
+    gap: 1em;
+    width: max-content;
+    margin: 0.5em auto 0;
+}
+
+.username {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.wait {
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.take-shot {
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    color: var(--button-color);
+    margin: 0;
+    font-size: 1.7em;
+    font-weight: bold;
+}
+
+.submit-button {
+    color: white;
+    font: inherit;
+    padding: 0.25rem 1rem;
+    margin-top: 1em;
+    background-color: var(--button-color);
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 3px 3px 5px grey;
+}
+
+.submit-button:active {
+    box-shadow: 1px 1px 5px grey;
+}
+
+.play-button {
+    display: none;
+    margin-top: 0;
+}
+
+.rotate-button {
+    border: thin solid black;
+    border-radius: 50px;
+    height: 2em;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px grey;
+    margin: 0 0.5em 0.5em 0;
+}
+
+.rotate-button:active {
+    box-shadow: 1px 1px 3px grey;
+}
+
+.rotate-button img {
+    display: block;
+}
+
+.board {
+    display: grid;
+    gap: 0.4vw;
+    grid-template-columns: repeat(11, min-content);
+    grid-template-rows: repeat(11, min-content);
+}
+
+.square {
+    height: clamp(2em, 3vw, 3em);
+    width: clamp(2em, 3vw, 3em);
+    padding: 0;
+    border: none;
+    background-color: var(--background-color);
+    opacity: 0.5;
+}
+
+.square:hover, .square:focus {
+    opacity: 1;
+}
+
+.small-board {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(10, min-content);
+    grid-template-rows: repeat(10, min-content);
+    width: max-content;
+    height: max-content;
+    margin-inline: auto;
+    background-color: black;
+    border: 1px solid black;
+}
+
+.small-square {
+	text-align: center;
+    height: 1em;
+    width: 1em;
+    padding: 0;
+    border: none;
+    background-color: white;
+}
+
+.small-title {
+    margin: 0;
+    text-align: center;
+}
+
+.label {
+    display: grid;
+    place-content: center;
+    margin-right: 0.25em;
+}
+
+.ships {
+    display: flex;
+    flex-direction: column;
+}
+
+.hit-boxes {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25vw;
+    margin-bottom: 0.75em;
+}
+
+.hit-boxes span {
+    display: grid;
+    place-content: center;
+    color: var(--button-color);
+    font-weight: bold;
+    font-size: x-large;
+    height: clamp(1em, 2vw, 3em);
+    width: clamp(1em, 2vw, 3em);
+    border: thin solid black;
+}
+
+.ship-image {
+    margin-bottom: 0.75em;
+    border: thin solid black;
+    border-radius: 10px;
+    height: clamp(2em, 3vw, 3em);
+}
+
+.ship-image img {
+    position: absolute;
+    z-index: 10;
+    cursor: move;
+    border-radius: 10px;
+    height: clamp(2em, 3vw, 3em);
+}
+
+.rotate {
+    transform: rotate(90deg);
+    transition-delay: 500ms;
+}
+
+.rotate-reset {
+    transform: rotate(0deg);
+    transition-delay: 500ms;
+}
+
+.carrier {
+    width: calc((clamp(2em, 3vw, 3em) * 5) + (0.4vw * 4));
+}
+
+.battleship {
+    width: calc((clamp(2em, 3vw, 3em) * 4) + (0.4vw * 3));
+}
+
+.destroyer, .sub {
+    width: calc((clamp(2em, 3vw, 3em) * 3) + (0.4vw * 2));
+}
+
+.patrol {
+    width: calc((clamp(2em, 3vw, 3em) * 2) + 0.4vw);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+    margin: 15vh auto;
+}
+
+.login-input {
+    font-size: 1.5em;
+    text-align: center;
+    padding: 0.2em;
+    margin: 0.5em;
+    border-radius: 10px;
+    min-width: -webkit-fill-available;
+}
+
+.login-button {
+    font-size: 1.5em;
+    width: 60%;
+}
+
+@media only screen and (max-width: 700px) {
+    .place-main {
+        flex-direction: column-reverse;
+        gap: 1em;
+    }
+    
+    .play-main {
+        grid-template-areas:
+            "gr2"
+            "gr1"
+            "gr3";
+    }
+
+    .ships {
+        align-items: center;
+    }
+
+    .username {
+        display: none;
+    }
+    
+    .take-shot, .wait {
+        top: 95%;
+        right: 25%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+}
