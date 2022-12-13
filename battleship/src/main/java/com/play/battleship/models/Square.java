@@ -8,7 +8,7 @@ public class Square {
 
 	public Square(String name) {
 		this.name = name;
-		this.occupied = "-";
+		this.occupied = " ";
 		this.shotMade = false;
 	}
 
@@ -25,7 +25,7 @@ public class Square {
 	}
 
 	public void setOccupied(String type) throws IllegalArgumentException {
-		if (this.occupied.equals("-")) {
+		if (this.occupied.equals(" ")) {
 			this.occupied = type;
 		} else {
 			throw new IllegalArgumentException("Space already occupied.");

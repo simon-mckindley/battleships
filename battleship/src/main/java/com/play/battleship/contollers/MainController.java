@@ -2,6 +2,7 @@ package com.play.battleship.contollers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import com.play.battleship.models.Submarine;
 import com.play.battleship.services.BoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
@@ -27,22 +29,22 @@ public class MainController {
 	private List<Square> oppBoard;
 
 	private BoardService boardService;
-	private Carrier carrier;
-	private Battle_ship battleship;
-	private Destroyer destroyer;
-	private Submarine submarine;
-	private PatrolBoat patrolBoat;
+	private Carrier oppCarrier = new Carrier();
+	private Battle_ship oppBattleship = new Battle_ship();
+	private Destroyer oppDestroyer = new Destroyer();
+	private Submarine oppSubmarine = new Submarine();
+	private PatrolBoat oppPatrolBoat = new PatrolBoat();
+	private Carrier myCarrier = new Carrier();
+	private Battle_ship myBattleship = new Battle_ship();
+	private Destroyer myDestroyer = new Destroyer();
+	private Submarine mySubmarine = new Submarine();
+	private PatrolBoat myPatrolBoat = new PatrolBoat();
+	private int[] hits = new int[5];
+	private boolean haveWinner;
+	private String winnerName = "";
 
-	public MainController(BoardService boardService, Carrier carrier, Battle_ship battleship, Destroyer destroyer,
-			Submarine submarine, PatrolBoat patrolBoat) {
+	public MainController(BoardService boardService) {
 		this.boardService = boardService;
-		this.carrier = carrier;
-		this.battleship = battleship;
-		this.destroyer = destroyer;
-		this.submarine = submarine;
-		this.patrolBoat = patrolBoat;
-
-		this.oppBoard = this.boardService.getAIBoard();
 	}
 
 	@GetMapping("/place")
@@ -67,18 +69,28 @@ public class MainController {
 		myBoard = boardService.SetBoard(myBoard, new Coords("Submarine", request.getParameter("submarine").toString()));
 		myBoard = boardService.SetBoard(myBoard, new Coords("Patrol-Boat", request.getParameter("patrol").toString()));
 
+		oppBoard = boardService.getAIBoard();
+
 		model.addAttribute("myBoard", myBoard);
+		model.addAttribute("oppBoard", oppBoard);
+		model.addAttribute("hits", hits);
 		return "play";
 	}
 
 	@GetMapping("/play")
 	public String getPlay(Model model) {
+		if (haveWinner) {
+			model.addAttribute("winner", winnerName);
+			return "win";
+		}
 		model.addAttribute("myBoard", myBoard);
+		model.addAttribute("oppBoard", oppBoard);
+		model.addAttribute("hits", hits);
 		return "play";
 	}
 
 	@PostMapping("/shoot")
-	public String postShoot(@RequestParam String shot, Model model) {
+	public String postShoot(@RequestParam String shot, Model model, HttpSession session) {
 		shot = shot.toUpperCase();
 		System.out.println("Shot made on: " + shot);
 		int index = boardService.findSquare(shot, oppBoard);
@@ -89,26 +101,92 @@ public class MainController {
 
 			switch (sq.getOccupied()) {
 			case "C":
-				carrier.addHit();
+				oppCarrier.addHit();
+				hits[0] = oppCarrier.getHits();
 				break;
 			case "B":
-				battleship.addHit();
+				oppBattleship.addHit();
+				hits[1] = oppBattleship.getHits();
 				break;
 			case "D":
-				destroyer.addHit();
+				oppDestroyer.addHit();
+				hits[2] = oppDestroyer.getHits();
 				break;
 			case "S":
-				submarine.addHit();
+				oppSubmarine.addHit();
+				hits[3] = oppSubmarine.getHits();
 				break;
 			case "P":
-				patrolBoat.addHit();
+				oppPatrolBoat.addHit();
+				hits[4] = oppPatrolBoat.getHits();
 				break;
+			}
+			
+			haveWinner = meWinner();
+			if (haveWinner) {
+				winnerName = session.getAttribute("name").toString();
 			}
 		} else {
 			System.out.println("Miss");
 		}
 
+		aiShot();
+
 		return "redirect:play";
+	}
+
+	private void aiShot() {
+		Random rand = new Random();
+		Square sq;
+
+		do {
+			int index = rand.nextInt(0, 100);
+			sq = myBoard.get(index);
+		} while (sq.getShotMade());
+
+		sq.setShotMade();
+		if (sq.isOccupied()) {
+			System.out.println("Hit on " + sq.getOccupied());
+
+			switch (sq.getOccupied()) {
+			case "C":
+				myCarrier.addHit();
+				break;
+			case "B":
+				myBattleship.addHit();
+				break;
+			case "D":
+				myDestroyer.addHit();
+				break;
+			case "S":
+				mySubmarine.addHit();
+				break;
+			case "P":
+				myPatrolBoat.addHit();
+				break;
+			}
+			
+			haveWinner = oppWinner();
+			if (haveWinner) {
+				winnerName = "AI";
+			}
+		} else {
+			System.out.println("Miss");
+		}
+	}
+
+	private boolean meWinner() {
+		if (oppCarrier.sunk() && oppBattleship.sunk() && oppDestroyer.sunk() && oppSubmarine.sunk() && oppPatrolBoat.sunk()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean oppWinner() {
+		if (myCarrier.sunk() && myBattleship.sunk() && myDestroyer.sunk() && mySubmarine.sunk() && myPatrolBoat.sunk()) {
+			return true;
+		}
+		return false;
 	}
 
 }

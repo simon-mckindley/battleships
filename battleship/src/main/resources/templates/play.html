@@ -23,35 +23,35 @@
         <div class="ships grid-1">
             <span class="">Aircraft Carrier</span>
             <div class="hit-boxes">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+                <span th:text="${hits[0] >= 1}? 'X' : ''"></span>
+                <span th:text="${hits[0] >= 2}? 'X' : ''"></span>
+                <span th:text="${hits[0] >= 3}? 'X' : ''"></span>
+                <span th:text="${hits[0] >= 4}? 'X' : ''"></span>
+                <span th:text="${hits[0] >= 5}? 'X' : ''"></span>
             </div>
             <span class="">Battleship</span>
             <div class="hit-boxes">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+                <span th:text="${hits[1] >= 1}? 'X' : ''"></span>
+                <span th:text="${hits[1] >= 2}? 'X' : ''"></span>
+                <span th:text="${hits[1] >= 3}? 'X' : ''"></span>
+                <span th:text="${hits[1] >= 4}? 'X' : ''"></span>
             </div>
             <span class="">Destroyer</span>
             <div class="hit-boxes">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span th:text="${hits[2] >= 1}? 'X' : ''"></span>
+                <span th:text="${hits[2] >= 2}? 'X' : ''"></span>
+                <span th:text="${hits[2] >= 3}? 'X' : ''"></span>
             </div>
             <span class="">Submarine</span>
             <div class="hit-boxes">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span th:text="${hits[3] >= 1}? 'X' : ''"></span>
+                <span th:text="${hits[3] >= 2}? 'X' : ''"></span>
+                <span th:text="${hits[3] >= 3}? 'X' : ''"></span>
             </div>
             <span class="">Patrol Boat</span>
             <div class="hit-boxes">
-                <span></span>
-                <span></span>
+                <span th:text="${hits[4] >= 1}? 'X' : ''"></span>
+                <span th:text="${hits[4] >= 2}? 'X' : ''"></span>
             </div>
         </div>
 
@@ -69,130 +69,134 @@
             <span class="label">10</span>
 
             <span class="label">A</span>
-            <button name="shot" value="a1" class="square"></button>
-            <button name="shot" value="a2" class="square"></button>
-            <button name="shot" value="a3" class="square"></button>
-            <button name="shot" value="a4" class="square"></button>
-            <button name="shot" value="a5" class="square"></button>
-            <button name="shot" value="a6" class="square"></button>
-            <button name="shot" value="a7" class="square"></button>
-            <button name="shot" value="a8" class="square"></button>
-            <button name="shot" value="a9" class="square"></button>
-            <button name="shot" value="a10" class="square"></button>
+            <button th:text="${oppBoard[0].shotMade}? ${oppBoard[0].occupied} : ''" th:class="${oppBoard[0].shotMade}? 'shot-square' : 'square'" name="shot" value="a1"></button>
+            <button th:text="${oppBoard[1].shotMade}? ${oppBoard[1].occupied} : ''" th:class="${oppBoard[1].shotMade}? 'shot-square' : 'square'" name="shot" value="a2"></button>
+            <button th:text="${oppBoard[2].shotMade}? ${oppBoard[2].occupied} : ''" th:class="${oppBoard[2].shotMade}? 'shot-square' : 'square'" name="shot" value="a3"></button>
+            <button th:text="${oppBoard[3].shotMade}? ${oppBoard[3].occupied} : ''" th:class="${oppBoard[3].shotMade}? 'shot-square' : 'square'" name="shot" value="a4"></button>
+            <button th:text="${oppBoard[4].shotMade}? ${oppBoard[4].occupied} : ''" th:class="${oppBoard[4].shotMade}? 'shot-square' : 'square'" name="shot" value="a5"></button>
+            <button th:text="${oppBoard[5].shotMade}? ${oppBoard[5].occupied} : ''" th:class="${oppBoard[5].shotMade}? 'shot-square' : 'square'" name="shot" value="a6"></button>
+            <button th:text="${oppBoard[6].shotMade}? ${oppBoard[6].occupied} : ''" th:class="${oppBoard[6].shotMade}? 'shot-square' : 'square'" name="shot" value="a7"></button>
+            <button th:text="${oppBoard[7].shotMade}? ${oppBoard[7].occupied} : ''" th:class="${oppBoard[7].shotMade}? 'shot-square' : 'square'" name="shot" value="a8"></button>
+            <button th:text="${oppBoard[8].shotMade}? ${oppBoard[8].occupied} : ''" th:class="${oppBoard[8].shotMade}? 'shot-square' : 'square'" name="shot" value="a9"></button>
+            <button th:text="${oppBoard[9].shotMade}? ${oppBoard[9].occupied} : ''" th:class="${oppBoard[9].shotMade}? 'shot-square' : 'square'" name="shot" value="a10"></button>
 
             <span class="label">B</span>
-            <button name="shot" value="b1" class="square"></button>
-            <button name="shot" value="b2" class="square"></button>
-            <button name="shot" value="b3" class="square"></button>
-            <button name="shot" value="b4" class="square"></button>
-            <button name="shot" value="b5" class="square"></button>
-            <button name="shot" value="b6" class="square"></button>
-            <button name="shot" value="b7" class="square"></button>
-            <button name="shot" value="b8" class="square"></button>
-            <button name="shot" value="b9" class="square"></button>
-            <button name="shot" value="b10" class="square"></button>
+            <button th:text="${oppBoard[10].shotMade}? ${oppBoard[10].occupied} : ''" th:class="${oppBoard[10].shotMade}? 'shot-square' : 'square'" name="shot" value="b1"></button>
+            <button th:text="${oppBoard[11].shotMade}? ${oppBoard[11].occupied} : ''" th:class="${oppBoard[11].shotMade}? 'shot-square' : 'square'" name="shot" value="b2"></button>
+            <button th:text="${oppBoard[12].shotMade}? ${oppBoard[12].occupied} : ''" th:class="${oppBoard[12].shotMade}? 'shot-square' : 'square'" name="shot" value="b3"></button>
+            <button th:text="${oppBoard[13].shotMade}? ${oppBoard[13].occupied} : ''" th:class="${oppBoard[13].shotMade}? 'shot-square' : 'square'" name="shot" value="b4"></button>
+            <button th:text="${oppBoard[14].shotMade}? ${oppBoard[14].occupied} : ''" th:class="${oppBoard[14].shotMade}? 'shot-square' : 'square'" name="shot" value="b5"></button>
+            <button th:text="${oppBoard[15].shotMade}? ${oppBoard[15].occupied} : ''" th:class="${oppBoard[15].shotMade}? 'shot-square' : 'square'" name="shot" value="b6"></button>
+            <button th:text="${oppBoard[16].shotMade}? ${oppBoard[16].occupied} : ''" th:class="${oppBoard[16].shotMade}? 'shot-square' : 'square'" name="shot" value="b7"></button>
+            <button th:text="${oppBoard[17].shotMade}? ${oppBoard[17].occupied} : ''" th:class="${oppBoard[17].shotMade}? 'shot-square' : 'square'" name="shot" value="b8"></button>
+            <button th:text="${oppBoard[18].shotMade}? ${oppBoard[18].occupied} : ''" th:class="${oppBoard[18].shotMade}? 'shot-square' : 'square'" name="shot" value="b9"></button>
+            <button th:text="${oppBoard[19].shotMade}? ${oppBoard[19].occupied} : ''" th:class="${oppBoard[19].shotMade}? 'shot-square' : 'square'" name="shot" value="b10"></button>
 
             <span class="label">C</span>
-            <button name="shot" value="c1" class="square"></button>
-            <button name="shot" value="c2" class="square"></button>
-            <button name="shot" value="c3" class="square"></button>
-            <button name="shot" value="c4" class="square"></button>
-            <button name="shot" value="c5" class="square"></button>
-            <button name="shot" value="c6" class="square"></button>
-            <button name="shot" value="c7" class="square"></button>
-            <button name="shot" value="c8" class="square"></button>
-            <button name="shot" value="c9" class="square"></button>
-            <button name="shot" value="c10" class="square"></button>
+            <button th:text="${oppBoard[20].shotMade}? ${oppBoard[20].occupied} : ''" th:class="${oppBoard[20].shotMade}? 'shot-square' : 'square'" name="shot" value="c1"></button>
+            <button th:text="${oppBoard[21].shotMade}? ${oppBoard[21].occupied} : ''" th:class="${oppBoard[21].shotMade}? 'shot-square' : 'square'" name="shot" value="c2"></button>
+            <button th:text="${oppBoard[22].shotMade}? ${oppBoard[22].occupied} : ''" th:class="${oppBoard[22].shotMade}? 'shot-square' : 'square'" name="shot" value="c3"></button>
+            <button th:text="${oppBoard[23].shotMade}? ${oppBoard[23].occupied} : ''" th:class="${oppBoard[23].shotMade}? 'shot-square' : 'square'" name="shot" value="c4"></button>
+            <button th:text="${oppBoard[24].shotMade}? ${oppBoard[24].occupied} : ''" th:class="${oppBoard[24].shotMade}? 'shot-square' : 'square'" name="shot" value="c5"></button>
+            <button th:text="${oppBoard[25].shotMade}? ${oppBoard[25].occupied} : ''" th:class="${oppBoard[25].shotMade}? 'shot-square' : 'square'" name="shot" value="c6"></button>
+            <button th:text="${oppBoard[26].shotMade}? ${oppBoard[26].occupied} : ''" th:class="${oppBoard[26].shotMade}? 'shot-square' : 'square'" name="shot" value="c7"></button>
+            <button th:text="${oppBoard[27].shotMade}? ${oppBoard[27].occupied} : ''" th:class="${oppBoard[27].shotMade}? 'shot-square' : 'square'" name="shot" value="c8"></button>
+            <button th:text="${oppBoard[28].shotMade}? ${oppBoard[28].occupied} : ''" th:class="${oppBoard[28].shotMade}? 'shot-square' : 'square'" name="shot" value="c9"></button>
+            <button th:text="${oppBoard[29].shotMade}? ${oppBoard[29].occupied} : ''" th:class="${oppBoard[29].shotMade}? 'shot-square' : 'square'" name="shot" value="c10"></button>
 
             <span class="label">D</span>
-            <button name="shot" value="d1" class="square"></button>
-            <button name="shot" value="d2" class="square"></button>
-            <button name="shot" value="d3" class="square"></button>
-            <button name="shot" value="d4" class="square"></button>
-            <button name="shot" value="d5" class="square"></button>
-            <button name="shot" value="d6" class="square"></button>
-            <button name="shot" value="d7" class="square"></button>
-            <button name="shot" value="d8" class="square"></button>
-            <button name="shot" value="d9" class="square"></button>
-            <button name="shot" value="d10" class="square"></button>
+            <button th:text="${oppBoard[30].shotMade}? ${oppBoard[30].occupied} : ''" th:class="${oppBoard[30].shotMade}? 'shot-square' : 'square'" name="shot" value="d1"></button>
+            <button th:text="${oppBoard[31].shotMade}? ${oppBoard[31].occupied} : ''" th:class="${oppBoard[31].shotMade}? 'shot-square' : 'square'" name="shot" value="d2"></button>
+            <button th:text="${oppBoard[32].shotMade}? ${oppBoard[32].occupied} : ''" th:class="${oppBoard[32].shotMade}? 'shot-square' : 'square'" name="shot" value="d3"></button>
+            <button th:text="${oppBoard[33].shotMade}? ${oppBoard[33].occupied} : ''" th:class="${oppBoard[33].shotMade}? 'shot-square' : 'square'" name="shot" value="d4"></button>
+            <button th:text="${oppBoard[34].shotMade}? ${oppBoard[34].occupied} : ''" th:class="${oppBoard[34].shotMade}? 'shot-square' : 'square'" name="shot" value="d5"></button>
+            <button th:text="${oppBoard[35].shotMade}? ${oppBoard[35].occupied} : ''" th:class="${oppBoard[35].shotMade}? 'shot-square' : 'square'" name="shot" value="d6"></button>
+            <button th:text="${oppBoard[36].shotMade}? ${oppBoard[36].occupied} : ''" th:class="${oppBoard[36].shotMade}? 'shot-square' : 'square'" name="shot" value="d7"></button>
+            <button th:text="${oppBoard[37].shotMade}? ${oppBoard[37].occupied} : ''" th:class="${oppBoard[37].shotMade}? 'shot-square' : 'square'" name="shot" value="d8"></button>
+            <button th:text="${oppBoard[38].shotMade}? ${oppBoard[38].occupied} : ''" th:class="${oppBoard[38].shotMade}? 'shot-square' : 'square'" name="shot" value="d9"></button>
+            <button th:text="${oppBoard[39].shotMade}? ${oppBoard[39].occupied} : ''" th:class="${oppBoard[39].shotMade}? 'shot-square' : 'square'" name="shot" value="d10"></button>
 
             <span class="label">E</span>
-            <button name="shot" value="e1" class="square"></button>
-            <button name="shot" value="e2" class="square"></button>
-            <button name="shot" value="e3" class="square"></button>
-            <button name="shot" value="e4" class="square"></button>
-            <button name="shot" value="e5" class="square"></button>
-            <button name="shot" value="e6" class="square"></button>
-            <button name="shot" value="e7" class="square"></button>
-            <button name="shot" value="e8" class="square"></button>
-            <button name="shot" value="e9" class="square"></button>
-            <button name="shot" value="e10" class="square"></button>
+            <button th:text="${oppBoard[40].shotMade}? ${oppBoard[40].occupied} : ''" th:class="${oppBoard[40].shotMade}? 'shot-square' : 'square'" name="shot" value="e1"></button>
+            <button th:text="${oppBoard[41].shotMade}? ${oppBoard[41].occupied} : ''" th:class="${oppBoard[41].shotMade}? 'shot-square' : 'square'" name="shot" value="e2"></button>
+            <button th:text="${oppBoard[42].shotMade}? ${oppBoard[42].occupied} : ''" th:class="${oppBoard[42].shotMade}? 'shot-square' : 'square'" name="shot" value="e3"></button>
+            <button th:text="${oppBoard[43].shotMade}? ${oppBoard[43].occupied} : ''" th:class="${oppBoard[43].shotMade}? 'shot-square' : 'square'" name="shot" value="e4"></button>
+            <button th:text="${oppBoard[44].shotMade}? ${oppBoard[44].occupied} : ''" th:class="${oppBoard[44].shotMade}? 'shot-square' : 'square'" name="shot" value="e5"></button>
+            <button th:text="${oppBoard[45].shotMade}? ${oppBoard[45].occupied} : ''" th:class="${oppBoard[45].shotMade}? 'shot-square' : 'square'" name="shot" value="e6"></button>
+            <button th:text="${oppBoard[46].shotMade}? ${oppBoard[46].occupied} : ''" th:class="${oppBoard[46].shotMade}? 'shot-square' : 'square'" name="shot" value="e7"></button>
+            <button th:text="${oppBoard[47].shotMade}? ${oppBoard[47].occupied} : ''" th:class="${oppBoard[47].shotMade}? 'shot-square' : 'square'" name="shot" value="e8"></button>
+            <button th:text="${oppBoard[48].shotMade}? ${oppBoard[48].occupied} : ''" th:class="${oppBoard[48].shotMade}? 'shot-square' : 'square'" name="shot" value="e9"></button>
+            <button th:text="${oppBoard[49].shotMade}? ${oppBoard[49].occupied} : ''" th:class="${oppBoard[49].shotMade}? 'shot-square' : 'square'" name="shot" value="e10"></button>
 
             <span class="label">F</span>
-            <button name="shot" value="f1" class="square"></button>
-            <button name="shot" value="f2" class="square"></button>
-            <button name="shot" value="f3" class="square"></button>
-            <button name="shot" value="f4" class="square"></button>
-            <button name="shot" value="f5" class="square"></button>
-            <button name="shot" value="f6" class="square"></button>
-            <button name="shot" value="f7" class="square"></button>
-            <button name="shot" value="f8" class="square"></button>
-            <button name="shot" value="f9" class="square"></button>
-            <button name="shot" value="f10" class="square"></button>
+            <button th:text="${oppBoard[50].shotMade}? ${oppBoard[50].occupied} : ''" th:class="${oppBoard[50].shotMade}? 'shot-square' : 'square'" name="shot" value="f1"></button>
+            <button th:text="${oppBoard[51].shotMade}? ${oppBoard[51].occupied} : ''" th:class="${oppBoard[51].shotMade}? 'shot-square' : 'square'" name="shot" value="f2"></button>
+            <button th:text="${oppBoard[52].shotMade}? ${oppBoard[52].occupied} : ''" th:class="${oppBoard[52].shotMade}? 'shot-square' : 'square'" name="shot" value="f3"></button>
+            <button th:text="${oppBoard[53].shotMade}? ${oppBoard[53].occupied} : ''" th:class="${oppBoard[53].shotMade}? 'shot-square' : 'square'" name="shot" value="f4"></button>
+            <button th:text="${oppBoard[54].shotMade}? ${oppBoard[54].occupied} : ''" th:class="${oppBoard[54].shotMade}? 'shot-square' : 'square'" name="shot" value="f5"></button>
+            <button th:text="${oppBoard[55].shotMade}? ${oppBoard[55].occupied} : ''" th:class="${oppBoard[55].shotMade}? 'shot-square' : 'square'" name="shot" value="f6"></button>
+            <button th:text="${oppBoard[56].shotMade}? ${oppBoard[56].occupied} : ''" th:class="${oppBoard[56].shotMade}? 'shot-square' : 'square'" name="shot" value="f7"></button>
+            <button th:text="${oppBoard[57].shotMade}? ${oppBoard[57].occupied} : ''" th:class="${oppBoard[57].shotMade}? 'shot-square' : 'square'" name="shot" value="f8"></button>
+            <button th:text="${oppBoard[58].shotMade}? ${oppBoard[58].occupied} : ''" th:class="${oppBoard[58].shotMade}? 'shot-square' : 'square'" name="shot" value="f9"></button>
+            <button th:text="${oppBoard[59].shotMade}? ${oppBoard[59].occupied} : ''" th:class="${oppBoard[59].shotMade}? 'shot-square' : 'square'" name="shot" value="f10"></button>
 
             <span class="label">G</span>
-            <button name="shot" value="g1" class="square"></button>
-            <button name="shot" value="g2" class="square"></button>
-            <button name="shot" value="g3" class="square"></button>
-            <button name="shot" value="g4" class="square"></button>
-            <button name="shot" value="g5" class="square"></button>
-            <button name="shot" value="g6" class="square"></button>
-            <button name="shot" value="g7" class="square"></button>
-            <button name="shot" value="g8" class="square"></button>
-            <button name="shot" value="g9" class="square"></button>
-            <button name="shot" value="g10" class="square"></button>
+            <button th:text="${oppBoard[60].shotMade}? ${oppBoard[60].occupied} : ''" th:class="${oppBoard[60].shotMade}? 'shot-square' : 'square'" name="shot" value="g1"></button>
+            <button th:text="${oppBoard[61].shotMade}? ${oppBoard[61].occupied} : ''" th:class="${oppBoard[61].shotMade}? 'shot-square' : 'square'" name="shot" value="g2"></button>
+            <button th:text="${oppBoard[62].shotMade}? ${oppBoard[62].occupied} : ''" th:class="${oppBoard[62].shotMade}? 'shot-square' : 'square'" name="shot" value="g3"></button>
+            <button th:text="${oppBoard[63].shotMade}? ${oppBoard[63].occupied} : ''" th:class="${oppBoard[63].shotMade}? 'shot-square' : 'square'" name="shot" value="g4"></button>
+            <button th:text="${oppBoard[64].shotMade}? ${oppBoard[64].occupied} : ''" th:class="${oppBoard[64].shotMade}? 'shot-square' : 'square'" name="shot" value="g5"></button>
+            <button th:text="${oppBoard[65].shotMade}? ${oppBoard[65].occupied} : ''" th:class="${oppBoard[65].shotMade}? 'shot-square' : 'square'" name="shot" value="g6"></button>
+            <button th:text="${oppBoard[66].shotMade}? ${oppBoard[66].occupied} : ''" th:class="${oppBoard[66].shotMade}? 'shot-square' : 'square'" name="shot" value="g7"></button>
+            <button th:text="${oppBoard[67].shotMade}? ${oppBoard[67].occupied} : ''" th:class="${oppBoard[67].shotMade}? 'shot-square' : 'square'" name="shot" value="g8"></button>
+            <button th:text="${oppBoard[68].shotMade}? ${oppBoard[68].occupied} : ''" th:class="${oppBoard[68].shotMade}? 'shot-square' : 'square'" name="shot" value="g9"></button>
+            <button th:text="${oppBoard[69].shotMade}? ${oppBoard[69].occupied} : ''" th:class="${oppBoard[69].shotMade}? 'shot-square' : 'square'" name="shot" value="g10"></button>
 
             <span class="label">H</span>
-            <button name="shot" value="h1" class="square"></button>
-            <button name="shot" value="h2" class="square"></button>
-            <button name="shot" value="h3" class="square"></button>
-            <button name="shot" value="h4" class="square"></button>
-            <button name="shot" value="h5" class="square"></button>
-            <button name="shot" value="h6" class="square"></button>
-            <button name="shot" value="h7" class="square"></button>
-            <button name="shot" value="h8" class="square"></button>
-            <button name="shot" value="h9" class="square"></button>
-            <button name="shot" value="h10" class="square"></button>
+            <button th:text="${oppBoard[70].shotMade}? ${oppBoard[70].occupied} : ''" th:class="${oppBoard[70].shotMade}? 'shot-square' : 'square'" name="shot" value="h1"></button>
+            <button th:text="${oppBoard[71].shotMade}? ${oppBoard[71].occupied} : ''" th:class="${oppBoard[71].shotMade}? 'shot-square' : 'square'" name="shot" value="h2"></button>
+            <button th:text="${oppBoard[72].shotMade}? ${oppBoard[72].occupied} : ''" th:class="${oppBoard[72].shotMade}? 'shot-square' : 'square'" name="shot" value="h3"></button>
+            <button th:text="${oppBoard[73].shotMade}? ${oppBoard[73].occupied} : ''" th:class="${oppBoard[73].shotMade}? 'shot-square' : 'square'" name="shot" value="h4"></button>
+            <button th:text="${oppBoard[74].shotMade}? ${oppBoard[74].occupied} : ''" th:class="${oppBoard[74].shotMade}? 'shot-square' : 'square'" name="shot" value="h5"></button>
+            <button th:text="${oppBoard[75].shotMade}? ${oppBoard[75].occupied} : ''" th:class="${oppBoard[75].shotMade}? 'shot-square' : 'square'" name="shot" value="h6"></button>
+            <button th:text="${oppBoard[76].shotMade}? ${oppBoard[76].occupied} : ''" th:class="${oppBoard[76].shotMade}? 'shot-square' : 'square'" name="shot" value="h7"></button>
+            <button th:text="${oppBoard[77].shotMade}? ${oppBoard[77].occupied} : ''" th:class="${oppBoard[77].shotMade}? 'shot-square' : 'square'" name="shot" value="h8"></button>
+            <button th:text="${oppBoard[78].shotMade}? ${oppBoard[78].occupied} : ''" th:class="${oppBoard[78].shotMade}? 'shot-square' : 'square'" name="shot" value="h9"></button>
+            <button th:text="${oppBoard[79].shotMade}? ${oppBoard[79].occupied} : ''" th:class="${oppBoard[79].shotMade}? 'shot-square' : 'square'" name="shot" value="h10"></button>
 
             <span class="label">I</span>
-            <button name="shot" value="i1" class="square"></button>
-            <button name="shot" value="i2" class="square"></button>
-            <button name="shot" value="i3" class="square"></button>
-            <button name="shot" value="i4" class="square"></button>
-            <button name="shot" value="i5" class="square"></button>
-            <button name="shot" value="i6" class="square"></button>
-            <button name="shot" value="i7" class="square"></button>
-            <button name="shot" value="i8" class="square"></button>
-            <button name="shot" value="i9" class="square"></button>
-            <button name="shot" value="i10" class="square"></button>
+            <button th:text="${oppBoard[80].shotMade}? ${oppBoard[80].occupied} : ''" th:class="${oppBoard[80].shotMade}? 'shot-square' : 'square'" name="shot" value="i1"></button>
+            <button th:text="${oppBoard[81].shotMade}? ${oppBoard[81].occupied} : ''" th:class="${oppBoard[81].shotMade}? 'shot-square' : 'square'" name="shot" value="i2"></button>
+            <button th:text="${oppBoard[82].shotMade}? ${oppBoard[82].occupied} : ''" th:class="${oppBoard[82].shotMade}? 'shot-square' : 'square'" name="shot" value="i3"></button>
+            <button th:text="${oppBoard[83].shotMade}? ${oppBoard[83].occupied} : ''" th:class="${oppBoard[83].shotMade}? 'shot-square' : 'square'" name="shot" value="i4"></button>
+            <button th:text="${oppBoard[84].shotMade}? ${oppBoard[84].occupied} : ''" th:class="${oppBoard[84].shotMade}? 'shot-square' : 'square'" name="shot" value="i5"></button>
+            <button th:text="${oppBoard[85].shotMade}? ${oppBoard[85].occupied} : ''" th:class="${oppBoard[85].shotMade}? 'shot-square' : 'square'" name="shot" value="i6"></button>
+            <button th:text="${oppBoard[86].shotMade}? ${oppBoard[86].occupied} : ''" th:class="${oppBoard[86].shotMade}? 'shot-square' : 'square'" name="shot" value="i7"></button>
+            <button th:text="${oppBoard[87].shotMade}? ${oppBoard[87].occupied} : ''" th:class="${oppBoard[87].shotMade}? 'shot-square' : 'square'" name="shot" value="i8"></button>
+            <button th:text="${oppBoard[88].shotMade}? ${oppBoard[88].occupied} : ''" th:class="${oppBoard[88].shotMade}? 'shot-square' : 'square'" name="shot" value="i9"></button>
+            <button th:text="${oppBoard[89].shotMade}? ${oppBoard[89].occupied} : ''" th:class="${oppBoard[89].shotMade}? 'shot-square' : 'square'" name="shot" value="i10"></button>
 
             <span class="label">J</span>
-            <button name="shot" value="j1" class="square"></button>
-            <button name="shot" value="j2" class="square"></button>
-            <button name="shot" value="j3" class="square"></button>
-            <button name="shot" value="j4" class="square"></button>
-            <button name="shot" value="j5" class="square"></button>
-            <button name="shot" value="j6" class="square"></button>
-            <button name="shot" value="j7" class="square"></button>
-            <button name="shot" value="j8" class="square"></button>
-            <button name="shot" value="j9" class="square"></button>
-            <button name="shot" value="j10" class="square"></button>
+            <button th:text="${oppBoard[90].shotMade}? ${oppBoard[90].occupied} : ''" th:class="${oppBoard[90].shotMade}? 'shot-square' : 'square'" name="shot" value="j1"></button>
+            <button th:text="${oppBoard[91].shotMade}? ${oppBoard[91].occupied} : ''" th:class="${oppBoard[91].shotMade}? 'shot-square' : 'square'" name="shot" value="j2"></button>
+            <button th:text="${oppBoard[92].shotMade}? ${oppBoard[92].occupied} : ''" th:class="${oppBoard[92].shotMade}? 'shot-square' : 'square'" name="shot" value="j3"></button>
+            <button th:text="${oppBoard[93].shotMade}? ${oppBoard[93].occupied} : ''" th:class="${oppBoard[93].shotMade}? 'shot-square' : 'square'" name="shot" value="j4"></button>
+            <button th:text="${oppBoard[94].shotMade}? ${oppBoard[94].occupied} : ''" th:class="${oppBoard[94].shotMade}? 'shot-square' : 'square'" name="shot" value="j5"></button>
+            <button th:text="${oppBoard[95].shotMade}? ${oppBoard[95].occupied} : ''" th:class="${oppBoard[95].shotMade}? 'shot-square' : 'square'" name="shot" value="j6"></button>
+            <button th:text="${oppBoard[96].shotMade}? ${oppBoard[96].occupied} : ''" th:class="${oppBoard[96].shotMade}? 'shot-square' : 'square'" name="shot" value="j7"></button>
+            <button th:text="${oppBoard[97].shotMade}? ${oppBoard[97].occupied} : ''" th:class="${oppBoard[97].shotMade}? 'shot-square' : 'square'" name="shot" value="j8"></button>
+            <button th:text="${oppBoard[98].shotMade}? ${oppBoard[98].occupied} : ''" th:class="${oppBoard[98].shotMade}? 'shot-square' : 'square'" name="shot" value="j9"></button>
+            <button th:text="${oppBoard[99].shotMade}? ${oppBoard[99].occupied} : ''" th:class="${oppBoard[99].shotMade}? 'shot-square' : 'square'" name="shot" value="j10"></button>
         </form>
 
         <div class="grid-3">
             <p class="small-title">Your Status</p>
             <div class="small-board">
-                <div th:each="square : ${myBoard}" th:text="${square.getOccupied}" th:attr="id=${square.getName}" class="small-square"></div>
+                <div th:each="square : ${myBoard}" 
+                	th:text="${square.getOccupied}" 
+                	th:attr="id=${square.getName}" 
+                	th:class="${square.getShotMade}? 'shot-small-square' : 'small-square'">
+                </div>
             </div>
         </div>
 
@@ -205,8 +209,12 @@
 	for (butt of buttons){
 		butt.disabled = true;
 	}
+	let shotButtons = document.getElementsByClassName("shot-square");
+	for (butt of shotButtons){
+		butt.disabled = true;
+	}
 	
-    setTimeout(takeShot, 5000);
+    setTimeout(takeShot, 1000);
 
     function takeShot() {
         let shot = document.getElementById("shot");
