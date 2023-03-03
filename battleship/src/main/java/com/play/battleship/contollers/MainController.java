@@ -17,6 +17,7 @@ import com.play.battleship.models.Destroyer;
 import com.play.battleship.models.PatrolBoat;
 import com.play.battleship.models.Square;
 import com.play.battleship.models.Submarine;
+import com.play.battleship.services.AI_Service;
 import com.play.battleship.services.BoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class MainController {
 	private List<Square> oppBoard;
 
 	private BoardService boardService;
+	private AI_Service ai_service;
 	private Carrier oppCarrier = new Carrier();
 	private Battle_ship oppBattleship = new Battle_ship();
 	private Destroyer oppDestroyer = new Destroyer();
@@ -43,8 +45,9 @@ public class MainController {
 	private boolean haveWinner;
 	private String winnerName = "";
 
-	public MainController(BoardService boardService) {
+	public MainController(BoardService boardService, AI_Service ai_service) {
 		this.boardService = boardService;
+		this.ai_service = ai_service;
 	}
 
 	@GetMapping("/place")
@@ -69,7 +72,7 @@ public class MainController {
 		myBoard = boardService.SetBoard(myBoard, new Coords("Submarine", request.getParameter("submarine").toString()));
 		myBoard = boardService.SetBoard(myBoard, new Coords("Patrol-Boat", request.getParameter("patrol").toString()));
 
-		oppBoard = boardService.getAIBoard();
+		oppBoard = ai_service.getAIBoard();
 
 		model.addAttribute("myBoard", myBoard);
 		model.addAttribute("oppBoard", oppBoard);
@@ -79,6 +82,7 @@ public class MainController {
 
 	@GetMapping("/play")
 	public String getPlay(Model model) {
+		System.out.println("getPlay, winner: " + haveWinner);
 		if (haveWinner) {
 			model.addAttribute("winner", winnerName);
 			return "win";
@@ -121,10 +125,11 @@ public class MainController {
 				hits[4] = oppPatrolBoat.getHits();
 				break;
 			}
-			
+
 			haveWinner = meWinner();
 			if (haveWinner) {
 				winnerName = session.getAttribute("name").toString();
+				return "redirect:play";
 			}
 		} else {
 			System.out.println("Miss");
@@ -143,6 +148,7 @@ public class MainController {
 			int index = rand.nextInt(0, 100);
 			sq = myBoard.get(index);
 		} while (sq.getShotMade());
+		// TODO make shot
 
 		sq.setShotMade();
 		if (sq.isOccupied()) {
@@ -165,7 +171,7 @@ public class MainController {
 				myPatrolBoat.addHit();
 				break;
 			}
-			
+
 			haveWinner = oppWinner();
 			if (haveWinner) {
 				winnerName = "AI";
@@ -176,14 +182,17 @@ public class MainController {
 	}
 
 	private boolean meWinner() {
-		if (oppCarrier.sunk() && oppBattleship.sunk() && oppDestroyer.sunk() && oppSubmarine.sunk() && oppPatrolBoat.sunk()) {
+		if (oppCarrier.sunk() && oppBattleship.sunk() && oppDestroyer.sunk() && oppSubmarine.sunk()
+				&& oppPatrolBoat.sunk()) {
+			System.out.println("MeWinner");
 			return true;
 		}
 		return false;
 	}
-	
+
 	private boolean oppWinner() {
-		if (myCarrier.sunk() && myBattleship.sunk() && myDestroyer.sunk() && mySubmarine.sunk() && myPatrolBoat.sunk()) {
+		if (myCarrier.sunk() && myBattleship.sunk() && myDestroyer.sunk() && mySubmarine.sunk()
+				&& myPatrolBoat.sunk()) {
 			return true;
 		}
 		return false;

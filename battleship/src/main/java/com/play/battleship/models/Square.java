@@ -33,7 +33,7 @@ public class Square {
 	}
 
 	public boolean isOccupied() {
-		return !this.occupied.equals("-");
+		return !this.occupied.equals(" ");
 	}
 
 	public boolean getShotMade() {

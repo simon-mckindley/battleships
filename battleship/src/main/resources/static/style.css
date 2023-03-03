@@ -286,6 +286,21 @@ h2 {
     margin: 15vh auto;
 }
 
+.winner > span:nth-child(2) {
+	font-size: 2em;	
+}
+
+.winner > span:nth-child(1) {
+	font-size: 2.2em;
+	text-shadow: 2px 2px 1px black, 2px -2px 1px black, -2px 2px 1px black, -2px -2px 1px black;
+    color: white;
+}
+
+.win-button {
+	font-size: 1.5em;
+	text-decoration: none;
+}
+
 .login-form {
     display: flex;
     flex-direction: column;
