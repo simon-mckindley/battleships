@@ -19,13 +19,14 @@ public class AI_Service {
 
 	private BoardService boardService;
 
+	Random rand = new Random();
+	final int BOARD_SIZE = 10;
+
 	public AI_Service(BoardService boardService) {
 		this.boardService = boardService;
 	}
 
 	public List<Square> getAIBoard() {
-		final int BOARD_SIZE = 10;
-		Random rand = new Random();
 		String[] ships = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol-Boat" };
 		int length = 0;
 
@@ -99,6 +100,128 @@ public class AI_Service {
 		}
 
 		return board;
+	}
+
+	public Square aiShot_easy(List<Square> board) {
+		Square sq;
+
+		do {
+			int index = rand.nextInt(0, BOARD_SIZE * BOARD_SIZE);
+			sq = board.get(index);
+		} while (sq.getShotMade());
+
+		return sq;
+	}
+
+	public Square aiShot_hard(List<Square> board, Square lastHit, Carrier carrier, Battle_ship battleship,
+			Destroyer destroyer, Submarine submarine, PatrolBoat patrolBoat) {
+		int unsunk_hits = 0;
+		int length = 0;
+		Square sq = new Square("");
+
+		if (carrier.getHits() > 0 && !carrier.sunk()) {
+			unsunk_hits = carrier.getHits();
+			length = Carrier.LENGTH;
+		} else if (battleship.getHits() > 0 && !battleship.sunk()) {
+			unsunk_hits = battleship.getHits();
+			length = Battle_ship.LENGTH;
+		} else if (destroyer.getHits() > 0 && !destroyer.sunk()) {
+			unsunk_hits = destroyer.getHits();
+			length = Destroyer.LENGTH;
+		} else if (submarine.getHits() > 0 && !submarine.sunk()) {
+			unsunk_hits = submarine.getHits();
+			length = Submarine.LENGTH;
+		} else if (patrolBoat.getHits() > 0 && !patrolBoat.sunk()) {
+			unsunk_hits = patrolBoat.getHits();
+			length = PatrolBoat.LENGTH;
+		}
+
+		if (unsunk_hits > 0) {
+			System.out.println("Hit-Unsunk");
+			int index = boardService.findSquare(lastHit.getName(), board);
+			if (unsunk_hits == 1) {
+				// Check enough space horizontal
+				if (spaceHorizontal(board, lastHit, length)) {
+					if (index + 1 < board.size() && !board.get(index + 1).getShotMade()) {
+						index = index + 1;
+					} else {
+						index = index - 1;
+					}
+				} else {
+					if (index - 10 >= 0 && !board.get(index - 10).getShotMade()) {
+						index = index - 10;
+					} else {
+						index = index + 10;
+					}
+				}
+			} else {
+				// Check horizontal alignment
+				if (alignmentHorizontal(board, lastHit)) {
+					if (index + 1 < board.size() && !board.get(index + 1).getShotMade()) {
+						index = index + 1;
+					} else {
+						for (int i = 1; i < 100; i++) {
+							if (!board.get(index - i).getShotMade()) {
+								index = index - i;
+								break;
+							}
+						}
+					}
+				} else {
+					if (index - 10 >= 0 && !board.get(index - 10).getShotMade()) {
+						index = index - 10;
+					} else {
+						for (int i = 10; i < 100; i += 10) {
+							if (!board.get(index + i).getShotMade()) {
+								index = index + i;
+								break;
+							}
+						}
+					}
+				}
+			}
+			sq = board.get(index);
+		} else {
+			sq = aiShot_easy(board);
+		}
+
+		return sq;
+	}
+
+	private boolean spaceHorizontal(List<Square> board, Square lastHit, int length) {
+		final char rowCoord = lastHit.getName().charAt(0);
+		int spaces = 0;
+		int index = boardService.findSquare(lastHit.getName(), board) + 1;
+
+		while ((index < board.size()) && !board.get(index).getShotMade()
+				&& (board.get(index).getName().charAt(0) == rowCoord)) {
+			spaces++;
+			index++;
+		}
+
+		index = boardService.findSquare(lastHit.getName(), board) - 1;
+
+		while ((index > 0) && !board.get(index).getShotMade() && (board.get(index).getName().charAt(0) == rowCoord)) {
+			spaces++;
+			index--;
+		}
+
+		System.out.println("Sp: " + spaces + " Le: " + (length - 1));
+		return spaces >= length - 1;
+	}
+
+	private boolean alignmentHorizontal(List<Square> board, Square lastHit) {
+		int index = boardService.findSquare(lastHit.getName(), board);
+
+		if (board.get(index + 1).getShotMade() && board.get(index + 1).isOccupied()) {
+			return true;
+		}
+
+		if (board.get(index - 1).getShotMade() && board.get(index - 1).isOccupied()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

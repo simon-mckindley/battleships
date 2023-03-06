@@ -1,5 +1,6 @@
 package com.play.battleship.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class BoardService {
 		int colIndex = Integer.parseInt(coords.getStart().substring(1));
 		char maxRow = board.get(board.size() - 1).getName().charAt(0);
 		int maxCol = board.get(board.size() - 1).getName().charAt(1);
+		List<Integer> indexes = new ArrayList<>();
 
 		if ((rowIndex < 'A' || colIndex < 0) || (rowIndex > maxRow || colIndex > maxCol)) {
 			throw new IllegalArgumentException("Coords out of bounds - {ends}");
@@ -29,13 +31,15 @@ public class BoardService {
 			do {
 				int newCol = colIndex + a;
 				key = (rowIndex + Integer.toString(newCol));
-				Square sq = new Square(key);
-				sq.setOccupied(coords.getName().charAt(0) + "");
-				System.out.println("Key: " + key);
 				int index = findSquare(key, board);
-				board.set(index, sq);
+				if (board.get(index).isOccupied()) {
+					throw new IllegalArgumentException("Space is occupied");
+				} else {
+					indexes.add(index);
+				}
 				a++;
-			} while (!coords.getEnd().equals(key) && a <= 10);
+			} while (!coords.getEnd().equals(key));
+
 		} else if (coords.getStart().charAt(1) == coords.getEnd().charAt(1)) {
 			int a = 0;
 
@@ -43,15 +47,22 @@ public class BoardService {
 			do {
 				char newRow = (char) (rowIndex + a);
 				key = (newRow + Integer.toString(colIndex));
-				Square sq = new Square(key);
-				sq.setOccupied(coords.getName().charAt(0) + "");
-				System.out.println("Key: " + key);
 				int index = findSquare(key, board);
-				board.set(index, sq);
+				if (board.get(index).isOccupied()) {
+					throw new IllegalArgumentException("Space is occupied");
+				} else {
+					indexes.add(index);
+				}
 				a++;
-			} while (!coords.getEnd().equals(key) && a <= 10);
+			} while (!coords.getEnd().equals(key));
 		} else {
 			throw new IllegalArgumentException("Coords out of bounds - {across}");
+		}
+
+		for (Integer index : indexes) {
+			Square sq = board.get(index);
+			sq.setOccupied(coords.getName().charAt(0) + "");
+			board.set(index, sq);
 		}
 
 		return board;

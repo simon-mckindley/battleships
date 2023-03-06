@@ -2,7 +2,6 @@ package com.play.battleship.contollers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,17 +30,18 @@ public class MainController {
 
 	private BoardService boardService;
 	private AI_Service ai_service;
-	private Carrier oppCarrier = new Carrier();
-	private Battle_ship oppBattleship = new Battle_ship();
-	private Destroyer oppDestroyer = new Destroyer();
-	private Submarine oppSubmarine = new Submarine();
-	private PatrolBoat oppPatrolBoat = new PatrolBoat();
-	private Carrier myCarrier = new Carrier();
-	private Battle_ship myBattleship = new Battle_ship();
-	private Destroyer myDestroyer = new Destroyer();
-	private Submarine mySubmarine = new Submarine();
-	private PatrolBoat myPatrolBoat = new PatrolBoat();
+	private Carrier oppCarrier;
+	private Battle_ship oppBattleship;
+	private Destroyer oppDestroyer;
+	private Submarine oppSubmarine;
+	private PatrolBoat oppPatrolBoat;
+	private Carrier myCarrier;
+	private Battle_ship myBattleship;
+	private Destroyer myDestroyer;
+	private Submarine mySubmarine;
+	private PatrolBoat myPatrolBoat;
 	private int[] hits = new int[5];
+	private Square lastAIHit;
 	private boolean haveWinner;
 	private String winnerName = "";
 
@@ -52,6 +52,23 @@ public class MainController {
 
 	@GetMapping("/place")
 	public String getPlace() {
+		haveWinner = false;
+		winnerName = "";
+		oppCarrier = new Carrier();
+		oppBattleship = new Battle_ship();
+		oppDestroyer = new Destroyer();
+		oppSubmarine = new Submarine();
+		oppPatrolBoat = new PatrolBoat();
+		myCarrier = new Carrier();
+		myBattleship = new Battle_ship();
+		myDestroyer = new Destroyer();
+		mySubmarine = new Submarine();
+		myPatrolBoat = new PatrolBoat();
+
+		for (int a = 0; a < hits.length; a++) {
+			hits[a] = 0;
+		}
+
 		return "place";
 	}
 
@@ -65,12 +82,20 @@ public class MainController {
 			}
 		}
 
-		myBoard = boardService.SetBoard(myBoard, new Coords("Carrier", request.getParameter("carrier").toString()));
-		myBoard = boardService.SetBoard(myBoard,
-				new Coords("Battleship", request.getParameter("battleship").toString()));
-		myBoard = boardService.SetBoard(myBoard, new Coords("Destroyer", request.getParameter("destroyer").toString()));
-		myBoard = boardService.SetBoard(myBoard, new Coords("Submarine", request.getParameter("submarine").toString()));
-		myBoard = boardService.SetBoard(myBoard, new Coords("Patrol-Boat", request.getParameter("patrol").toString()));
+		try {
+			myBoard = boardService.SetBoard(myBoard, new Coords("Carrier", request.getParameter("carrier").toString()));
+			myBoard = boardService.SetBoard(myBoard,
+					new Coords("Battleship", request.getParameter("battleship").toString()));
+			myBoard = boardService.SetBoard(myBoard,
+					new Coords("Destroyer", request.getParameter("destroyer").toString()));
+			myBoard = boardService.SetBoard(myBoard,
+					new Coords("Submarine", request.getParameter("submarine").toString()));
+			myBoard = boardService.SetBoard(myBoard,
+					new Coords("Patrol-Boat", request.getParameter("patrol").toString()));
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			return "redirect:place";
+		}
 
 		oppBoard = ai_service.getAIBoard();
 
@@ -141,18 +166,19 @@ public class MainController {
 	}
 
 	private void aiShot() {
-		Random rand = new Random();
+		// TODO make shot
 		Square sq;
 
-		do {
-			int index = rand.nextInt(0, 100);
-			sq = myBoard.get(index);
-		} while (sq.getShotMade());
-		// TODO make shot
+		// sq = ai_service.aiShot_easy(myBoard);
 
+		sq = ai_service.aiShot_hard(myBoard, lastAIHit, myCarrier, myBattleship, myDestroyer, mySubmarine,
+				myPatrolBoat);
+
+		System.out.println("AI shot made on: " + sq.getName());
 		sq.setShotMade();
 		if (sq.isOccupied()) {
 			System.out.println("Hit on " + sq.getOccupied());
+			lastAIHit = sq;
 
 			switch (sq.getOccupied()) {
 			case "C":
