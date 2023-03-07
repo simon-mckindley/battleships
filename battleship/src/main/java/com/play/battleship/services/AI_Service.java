@@ -117,7 +117,7 @@ public class AI_Service {
 			Destroyer destroyer, Submarine submarine, PatrolBoat patrolBoat) {
 		int unsunk_hits = 0;
 		int length = 0;
-		Square sq = new Square("");
+		int index = 0;
 
 		if (carrier.getHits() > 0 && !carrier.sunk()) {
 			unsunk_hits = carrier.getHits();
@@ -137,12 +137,13 @@ public class AI_Service {
 		}
 
 		if (unsunk_hits > 0) {
-			System.out.println("Hit-Unsunk");
-			int index = boardService.findSquare(lastHit.getName(), board);
+			index = boardService.findSquare(lastHit.getName(), board);
 			if (unsunk_hits == 1) {
 				// Check enough space horizontal
 				if (spaceHorizontal(board, lastHit, length)) {
-					if (index + 1 < board.size() && !board.get(index + 1).getShotMade()) {
+					if (index + 1 < board.size()
+							&& (board.get(index + 1).getName().charAt(0) == lastHit.getName().charAt(0))
+							&& !board.get(index + 1).getShotMade()) {
 						index = index + 1;
 					} else {
 						index = index - 1;
@@ -157,7 +158,9 @@ public class AI_Service {
 			} else {
 				// Check horizontal alignment
 				if (alignmentHorizontal(board, lastHit)) {
-					if (index + 1 < board.size() && !board.get(index + 1).getShotMade()) {
+					if (index + 1 < board.size()
+							&& (board.get(index + 1).getName().charAt(0) == lastHit.getName().charAt(0))
+							&& !board.get(index + 1).getShotMade()) {
 						index = index + 1;
 					} else {
 						for (int i = 1; i < 100; i++) {
@@ -180,12 +183,32 @@ public class AI_Service {
 					}
 				}
 			}
-			sq = board.get(index);
+
 		} else {
-			sq = aiShot_easy(board);
+
+			boolean valid;
+			int a = 0;
+			do {
+				valid = true;
+				index = rand.nextInt(0, BOARD_SIZE * BOARD_SIZE);
+				if (board.get(index).getShotMade()) {
+					valid = false;
+				} else if ((index - 10 >= 0) && board.get(index - 10).getShotMade()) {
+					valid = false;
+				} else if ((index + 10 < board.size()) && board.get(index + 10).getShotMade()) {
+					valid = false;
+				} else if ((index - 1 >= 0) && board.get(index - 1).getShotMade()) {
+					valid = false;
+				} else if ((index + 1 < board.size()) && board.get(index + 1).getShotMade()) {
+					valid = false;
+				}
+
+				a++;
+			} while (!valid && a < 50);
 		}
 
-		return sq;
+		return board.get(index);
+
 	}
 
 	private boolean spaceHorizontal(List<Square> board, Square lastHit, int length) {
@@ -206,18 +229,19 @@ public class AI_Service {
 			index--;
 		}
 
-		System.out.println("Sp: " + spaces + " Le: " + (length - 1));
 		return spaces >= length - 1;
 	}
 
 	private boolean alignmentHorizontal(List<Square> board, Square lastHit) {
 		int index = boardService.findSquare(lastHit.getName(), board);
 
-		if (board.get(index + 1).getShotMade() && board.get(index + 1).isOccupied()) {
+		if ((index + 1 < board.size()) && (board.get(index + 1).getName().charAt(0) == lastHit.getName().charAt(0))
+				&& board.get(index + 1).getShotMade() && board.get(index + 1).isOccupied()) {
 			return true;
 		}
 
-		if (board.get(index - 1).getShotMade() && board.get(index - 1).isOccupied()) {
+		if ((index - 1 >= 0) && (board.get(index - 1).getName().charAt(0) == lastHit.getName().charAt(0))
+				&& board.get(index - 1).getShotMade() && board.get(index - 1).isOccupied()) {
 			return true;
 		}
 

@@ -51,7 +51,10 @@ public class MainController {
 	}
 
 	@GetMapping("/place")
-	public String getPlace() {
+	public String getPlace(HttpSession session) {
+		if (session.getAttribute("name") == null) {
+			return "redirect:login";
+		}
 		haveWinner = false;
 		winnerName = "";
 		oppCarrier = new Carrier();
@@ -73,7 +76,10 @@ public class MainController {
 	}
 
 	@PostMapping("/play")
-	public String postPlay(HttpServletRequest request, Model model) {
+	public String postPlay(HttpSession session, HttpServletRequest request, Model model) {
+		if (session.getAttribute("name") == null) {
+			return "redirect:login";
+		}
 		System.out.println("POST PLAY");
 		myBoard = new ArrayList<Square>();
 		for (char r = 'A'; r <= 'J'; r++) {
@@ -106,8 +112,11 @@ public class MainController {
 	}
 
 	@GetMapping("/play")
-	public String getPlay(Model model) {
-		System.out.println("getPlay, winner: " + haveWinner);
+	public String getPlay(HttpSession session, Model model) {
+		if (session.getAttribute("name") == null) {
+			return "redirect:login";
+		}
+		System.out.println("\nGetPlay, winner: " + haveWinner);
 		if (haveWinner) {
 			model.addAttribute("winner", winnerName);
 			return "win";
@@ -160,19 +169,21 @@ public class MainController {
 			System.out.println("Miss");
 		}
 
-		aiShot();
+		aiShot(session);
 
 		return "redirect:play";
 	}
 
-	private void aiShot() {
-		// TODO make shot
-		Square sq;
+	private void aiShot(HttpSession session) {
+		Square sq = new Square("");
+		String name = session.getAttribute("opponent").toString();
 
-		// sq = ai_service.aiShot_easy(myBoard);
-
-		sq = ai_service.aiShot_hard(myBoard, lastAIHit, myCarrier, myBattleship, myDestroyer, mySubmarine,
-				myPatrolBoat);
+		if (name.equals("ai-easy")) {
+			sq = ai_service.aiShot_easy(myBoard);
+		} else if (name.equals("ai-hard")) {
+			sq = ai_service.aiShot_hard(myBoard, lastAIHit, myCarrier, myBattleship, myDestroyer, mySubmarine,
+					myPatrolBoat);
+		}
 
 		System.out.println("AI shot made on: " + sq.getName());
 		sq.setShotMade();
@@ -200,7 +211,7 @@ public class MainController {
 
 			haveWinner = oppWinner();
 			if (haveWinner) {
-				winnerName = "AI";
+				winnerName = name.toUpperCase();
 			}
 		} else {
 			System.out.println("Miss");

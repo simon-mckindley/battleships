@@ -20,12 +20,13 @@ public class LoginController {
 	}
 	
 	@PostMapping("/login")
-	public String postLogin(String name, HttpSession session) {
+	public String postLogin(String name, String opponent, HttpSession session) {
 		if (name.isBlank()) {
 			return "login";
 		}
 		
 		session.setAttribute("name", name.strip());
+		session.setAttribute("opponent", opponent.strip());
 		
 		return "redirect:place";
 	}
