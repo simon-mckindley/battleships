@@ -120,6 +120,16 @@ h2 {
 .play-button {
     display: none;
     margin-top: 0;
+    animation: play-flash 1800ms infinite ease;
+}
+
+@keyframes play-flash {
+	0% { scale: 1; }
+	50% {
+	scale: 1.4;
+	box-shadow: 6px 6px 10px 3px grey;
+	}
+	100% { scale: 1;}
 }
 
 .rotate-button {
@@ -286,14 +296,80 @@ h2 {
     margin: 15vh auto;
 }
 
-.winner > span:nth-child(2) {
-	font-size: 2em;	
+.winner-name {
+	font-size: 3em;	
 }
 
-.winner > span:nth-child(1) {
-	font-size: 2.2em;
-	text-shadow: 2px 2px 1px black, 2px -2px 1px black, -2px 2px 1px black, -2px -2px 1px black;
-    color: white;
+.winner-text {
+	display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+
+.winner-text span {
+    --blur: 15px;
+    --offPos: 8px;
+    --offNeg: -8px;
+    --duration: 400ms;
+    font-size: 4em;
+}
+
+.winner-text :nth-child(1) {
+    position: relative;
+    color: red;
+    transform-origin: top;
+    animation:
+        var(--duration) linear flash,
+        var(--duration) linear calc(var(--duration) * 10) flash;
+}
+
+.winner-text :nth-child(2) {
+    color: orange;
+    animation:
+    	var(--duration) linear var(--duration) flash,
+        var(--duration) linear calc(var(--duration) * 9) flash,
+        var(--duration) linear calc(var(--duration) * 11) flash;
+}
+
+.winner-text :nth-child(3) {
+    color: yellow;
+    animation:
+        var(--duration) linear calc(var(--duration) * 2) flash,
+        var(--duration) linear calc(var(--duration) * 8) flash,
+        var(--duration) linear calc(var(--duration) * 12) flash;
+}
+
+.winner-text :nth-child(4) {
+    color: lawngreen;
+    animation:
+        var(--duration) linear calc(var(--duration) * 3) flash,
+        var(--duration) linear calc(var(--duration) * 7) flash,
+        var(--duration) linear calc(var(--duration) * 13) flash;
+}
+
+.winner-text :nth-child(5) {
+    color: blue;
+    animation:
+        var(--duration) linear calc(var(--duration) * 4) flash,
+        var(--duration) linear calc(var(--duration) * 6) flash,
+        var(--duration) linear calc(var(--duration) * 14) flash;
+}
+
+.winner-text :nth-child(6) {
+    color: blueviolet;
+    animation:
+        var(--duration) linear calc(var(--duration) * 5) flash,
+        var(--duration) linear calc(var(--duration) * 15) flash;
+}
+
+@keyframes flash {
+    from {
+    	text-shadow:
+        	var(--offPos) var(--offPos) var(--blur),
+            var(--offNeg) var(--offPos) var(--blur),
+            var(--offPos) var(--offNeg) var(--blur),
+            var(--offNeg) var(--offNeg) var(--blur);
+	}
 }
 
 .win-button {

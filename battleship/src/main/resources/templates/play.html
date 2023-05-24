@@ -18,6 +18,14 @@
         <p th:text="${session.name}" class="username"></p>
         <p id="shot" class="wait">Waiting for opponent</p>
     </header>
+    
+    <dialog id="modal">
+        <div class="modal-message">
+            <h3 th:text=""></h3>
+            <p th:text=""></p>
+            <button id="ok-button" class="enq-button sub-button" type="button">OK</button>
+        </div>
+    </dialog>
 
     <main class="play-main">
         <div class="ships grid-1">
