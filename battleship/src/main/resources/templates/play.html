@@ -9,7 +9,7 @@
     <title>Battleship - Play</title>
     <link rel="icon" href='background.png' type="image/x-icon">
     <link id='stylecss' type="text/css" rel="stylesheet" href="style.css">
-
+	<script src='play_script.js' defer></script>
 </head>
 
 <body>
@@ -21,9 +21,9 @@
     
     <dialog id="modal">
         <div class="modal-message">
-            <h3 th:text=""></h3>
-            <p th:text=""></p>
-            <button id="ok-button" class="enq-button sub-button" type="button">OK</button>
+            <h3 th:text="${alertHead}"></h3>
+            <p th:text="${alertText}"></p>
+            <button id="modal-button" class="modal-button submit-button" type="button">OK</button>
         </div>
     </dialog>
 
@@ -211,28 +211,5 @@
     </main>
 
 </body>
-
-<script>
-	let buttons = document.getElementsByClassName("square");
-	for (butt of buttons){
-		butt.disabled = true;
-	}
-	let shotButtons = document.getElementsByClassName("shot-square");
-	for (butt of shotButtons){
-		butt.disabled = true;
-	}
-	
-    setTimeout(takeShot, 1000);
-
-    function takeShot() {
-        let shot = document.getElementById("shot");
-        shot.className = "take-shot";
-        shot.innerHTML = "Take your shot !";
-    	for (butt of buttons){
-    		butt.disabled = false;
-    	}
-        console.log("take shot function");
-    }
-</script>
 
 </html>

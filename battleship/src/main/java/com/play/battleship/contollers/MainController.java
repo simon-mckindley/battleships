@@ -41,6 +41,7 @@ public class MainController {
 	private Submarine mySubmarine;
 	private PatrolBoat myPatrolBoat;
 	private int[] hits = new int[5];
+	private String lastHit = "";
 	private Square lastAIHit;
 	private boolean haveWinner;
 	private String winnerName = "";
@@ -105,6 +106,8 @@ public class MainController {
 
 		oppBoard = ai_service.getAIBoard();
 
+		model.addAttribute("alertHead", "Ready to play?");
+		model.addAttribute("alertText", "Click on the board squares to take your shot");
 		model.addAttribute("myBoard", myBoard);
 		model.addAttribute("oppBoard", oppBoard);
 		model.addAttribute("hits", hits);
@@ -121,6 +124,14 @@ public class MainController {
 			model.addAttribute("winner", winnerName);
 			return "win";
 		}
+		
+		String alertText = "Too bad, try again";
+		if (!lastHit.equals("Miss...")) {
+			alertText = "Well done";
+		}
+		
+		model.addAttribute("alertHead", lastHit);
+		model.addAttribute("alertText", alertText);
 		model.addAttribute("myBoard", myBoard);
 		model.addAttribute("oppBoard", oppBoard);
 		model.addAttribute("hits", hits);
@@ -136,27 +147,53 @@ public class MainController {
 		sq.setShotMade();
 		if (sq.isOccupied()) {
 			System.out.println("Hit on " + sq.getOccupied());
+			lastHit = "HIT on the ";
 
 			switch (sq.getOccupied()) {
 			case "C":
 				oppCarrier.addHit();
 				hits[0] = oppCarrier.getHits();
+				if (oppCarrier.sunk()) {
+					lastHit = "You have SUNK the Carrier!";
+				} else {
+					lastHit += "Carrier";
+				}
 				break;
 			case "B":
 				oppBattleship.addHit();
 				hits[1] = oppBattleship.getHits();
+				if (oppBattleship.sunk()) {
+					lastHit = "You have SUNK the Battleship!";
+				} else {
+					lastHit += "Battleship";
+				}
 				break;
 			case "D":
 				oppDestroyer.addHit();
 				hits[2] = oppDestroyer.getHits();
+				if (oppDestroyer.sunk()) {
+					lastHit = "You have SUNK the Destroyer!";
+				} else {
+					lastHit += "Destroyer";
+				}
 				break;
 			case "S":
 				oppSubmarine.addHit();
 				hits[3] = oppSubmarine.getHits();
+				if (oppSubmarine.sunk()) {
+					lastHit = "You have SUNK the Submarine!";
+				} else {
+					lastHit += "Submarine";
+				}
 				break;
 			case "P":
 				oppPatrolBoat.addHit();
 				hits[4] = oppPatrolBoat.getHits();
+				if (oppPatrolBoat.sunk()) {
+					lastHit = "You have SUNK the Patrol Boat!";
+				} else {
+					lastHit += "Patrol Boat";
+				}
 				break;
 			}
 
@@ -166,6 +203,7 @@ public class MainController {
 				return "redirect:play";
 			}
 		} else {
+			lastHit = "Miss...";
 			System.out.println("Miss");
 		}
 
