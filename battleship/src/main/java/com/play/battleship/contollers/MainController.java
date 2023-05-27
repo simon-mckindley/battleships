@@ -41,8 +41,11 @@ public class MainController {
 	private Submarine mySubmarine;
 	private PatrolBoat myPatrolBoat;
 	private int[] hits = new int[5];
-	private String lastHit = "";
 	private Square lastAIHit;
+	private String shotOn = "Welcome";
+	private String lastHit = "";
+	private String alertText = "";
+	private String modalType = "";
 	private boolean haveWinner;
 	private String winnerName = "";
 
@@ -106,8 +109,10 @@ public class MainController {
 
 		oppBoard = ai_service.getAIBoard();
 
+		model.addAttribute("shotOn", shotOn);
 		model.addAttribute("alertHead", "Ready to play?");
 		model.addAttribute("alertText", "Click on the board squares to take your shot");
+		model.addAttribute("modalType", modalType);
 		model.addAttribute("myBoard", myBoard);
 		model.addAttribute("oppBoard", oppBoard);
 		model.addAttribute("hits", hits);
@@ -125,13 +130,10 @@ public class MainController {
 			return "win";
 		}
 		
-		String alertText = "Too bad, try again";
-		if (!lastHit.equals("Miss...")) {
-			alertText = "Well done";
-		}
-		
+		model.addAttribute("shotOn", shotOn);
 		model.addAttribute("alertHead", lastHit);
 		model.addAttribute("alertText", alertText);
+		model.addAttribute("modalType", modalType);
 		model.addAttribute("myBoard", myBoard);
 		model.addAttribute("oppBoard", oppBoard);
 		model.addAttribute("hits", hits);
@@ -145,9 +147,13 @@ public class MainController {
 		int index = boardService.findSquare(shot, oppBoard);
 		Square sq = oppBoard.get(index);
 		sq.setShotMade();
+		shotOn = "Your shot on " + sq.getName();
+		modalType = "player";
+		
 		if (sq.isOccupied()) {
 			System.out.println("Hit on " + sq.getOccupied());
-			lastHit = "HIT on the ";
+			lastHit = "You have HIT the ";
+			alertText = "Well done";
 
 			switch (sq.getOccupied()) {
 			case "C":
@@ -203,18 +209,19 @@ public class MainController {
 				return "redirect:play";
 			}
 		} else {
-			lastHit = "Miss...";
+			lastHit = "You missed...";
+			alertText = "Too bad, try again";
 			System.out.println("Miss");
 		}
-
-		aiShot(session);
 
 		return "redirect:play";
 	}
 
-	private void aiShot(HttpSession session) {
+	@GetMapping("/oppshoot")
+	private String aiShot(HttpSession session) {
 		Square sq = new Square("");
 		String name = session.getAttribute("opponent").toString();
+		modalType = "opponent";
 
 		if (name.equals("ai-easy")) {
 			sq = ai_service.aiShot_easy(myBoard);
@@ -224,36 +231,70 @@ public class MainController {
 		}
 
 		System.out.println("AI shot made on: " + sq.getName());
+		shotOn = "Opponent shot on " + sq.getName();
 		sq.setShotMade();
+		
 		if (sq.isOccupied()) {
 			System.out.println("Hit on " + sq.getOccupied());
 			lastAIHit = sq;
+			lastHit = "Your opponent has HIT your ";
+			alertText = "Too bad";
 
 			switch (sq.getOccupied()) {
 			case "C":
 				myCarrier.addHit();
+				if (myCarrier.sunk()) {
+					lastHit = "Your Carrier has been SUNK!";
+				} else {
+					lastHit += "Carrier";
+				}
 				break;
 			case "B":
 				myBattleship.addHit();
+				if (myBattleship.sunk()) {
+					lastHit = "Your Battleship has been SUNK!";
+				} else {
+					lastHit += "Battleship";
+				}
 				break;
 			case "D":
 				myDestroyer.addHit();
+				if (myDestroyer.sunk()) {
+					lastHit = "Your Destroyer has been SUNK!";
+				} else {
+					lastHit += "Destroyer";
+				}
 				break;
 			case "S":
 				mySubmarine.addHit();
+				if (mySubmarine.sunk()) {
+					lastHit = "Your Submarine has been SUNK!";
+				} else {
+					lastHit += "Submarine";
+				}
 				break;
 			case "P":
 				myPatrolBoat.addHit();
+				if (myPatrolBoat.sunk()) {
+					lastHit = "Your Patrol Boat has been SUNK!";
+				} else {
+					lastHit += "Patrol Boat";
+				}
 				break;
 			}
 
 			haveWinner = oppWinner();
 			if (haveWinner) {
 				winnerName = name.toUpperCase();
+				return "redirect:play";
 			}
 		} else {
+			lastHit = "Your opponent has missed...";
+			alertText = "That was lucky";
 			System.out.println("Miss");
 		}
+		
+		return "redirect:play";
 	}
 
 	private boolean meWinner() {

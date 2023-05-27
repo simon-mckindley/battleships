@@ -16,14 +16,15 @@
     <header>
         <h1>Battleship</h1>
         <p th:text="${session.name}" class="username"></p>
-        <p id="shot" class="wait">Waiting for opponent</p>
+        <p id="shot" class="take-shot"></p>
     </header>
     
     <dialog id="modal">
         <div class="modal-message">
+        	<p th:text="${shotOn}"></p>
             <h3 th:text="${alertHead}"></h3>
             <p th:text="${alertText}"></p>
-            <button id="modal-button" class="modal-button submit-button" type="button">OK</button>
+            <button id="modal-button" class=" " th:class="${modalType}" type="button">OK</button>
         </div>
     </dialog>
 
@@ -198,7 +199,7 @@
         </form>
 
         <div class="grid-3">
-            <p class="small-title">Your Status</p>
+            <p class="small-title">Your Board</p>
             <div class="small-board">
                 <div th:each="square : ${myBoard}" 
                 	th:text="${square.getOccupied}" 
@@ -209,6 +210,8 @@
         </div>
 
     </main>
+    
+    <form action="#" th:action="@{/oppshoot}" method="get" id="get-form" style="display:none"></form>
 
 </body>
 
