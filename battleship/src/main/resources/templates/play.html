@@ -24,12 +24,13 @@
         	<p th:text="${shotOn}"></p>
             <h3 th:text="${alertHead}"></h3>
             <p th:text="${alertText}"></p>
-            <button id="modal-button" class=" " th:class="${modalType}" type="button">OK</button>
+            <button id="modal-button" th:class="${modalType}" type="button">OK</button>
         </div>
     </dialog>
 
     <main class="play-main">
-        <div class="ships grid-1">
+        <div class="hits-container grid-1">
+        <div id="carrier-hits">
             <span class="">Aircraft Carrier</span>
             <div class="hit-boxes">
                 <span th:text="${hits[0] >= 1}? 'X' : ''"></span>
@@ -38,6 +39,8 @@
                 <span th:text="${hits[0] >= 4}? 'X' : ''"></span>
                 <span th:text="${hits[0] >= 5}? 'X' : ''"></span>
             </div>
+            </div>
+            <div id="battle-hits">
             <span class="">Battleship</span>
             <div class="hit-boxes">
                 <span th:text="${hits[1] >= 1}? 'X' : ''"></span>
@@ -45,22 +48,29 @@
                 <span th:text="${hits[1] >= 3}? 'X' : ''"></span>
                 <span th:text="${hits[1] >= 4}? 'X' : ''"></span>
             </div>
+            </div>
+            <div id="destroyer-hits">
             <span class="">Destroyer</span>
             <div class="hit-boxes">
                 <span th:text="${hits[2] >= 1}? 'X' : ''"></span>
                 <span th:text="${hits[2] >= 2}? 'X' : ''"></span>
                 <span th:text="${hits[2] >= 3}? 'X' : ''"></span>
             </div>
+            </div>
+            <div id="submarine-hits">
             <span class="">Submarine</span>
             <div class="hit-boxes">
                 <span th:text="${hits[3] >= 1}? 'X' : ''"></span>
                 <span th:text="${hits[3] >= 2}? 'X' : ''"></span>
                 <span th:text="${hits[3] >= 3}? 'X' : ''"></span>
             </div>
+            </div>
+            <div id="patrol-hits">
             <span class="">Patrol Boat</span>
             <div class="hit-boxes">
                 <span th:text="${hits[4] >= 1}? 'X' : ''"></span>
                 <span th:text="${hits[4] >= 2}? 'X' : ''"></span>
+            </div>
             </div>
         </div>
 

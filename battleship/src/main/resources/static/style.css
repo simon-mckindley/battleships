@@ -62,13 +62,13 @@ h1 {
 
 h2 {
     margin: 0;
-    width: max-content;
 }
 
 .head-info {
     display: flex;
+    justify-content: center;
+    text-align: center;
     gap: 1em;
-    width: max-content;
     margin: 0.5em auto 0;
 }
 
@@ -243,7 +243,7 @@ h2 {
     margin-right: 0.25em;
 }
 
-.ships {
+.ships, .ships>div {
     display: flex;
     flex-direction: column;
 }
@@ -410,6 +410,7 @@ h2 {
     padding: 0.2em;
     margin: 0.5em;
     border-radius: 10px;
+    min-width: 90%;
     min-width: -webkit-fill-available;
 }
 
@@ -440,8 +441,35 @@ dialog::backdrop{
             "gr3";
     }
 
-    .ships {
-        align-items: center;
+    .hits-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        place-items: center;
+        grid-template-areas:
+        	"car-hits car-hits"
+        	"bat-hits pat-hits"
+        	"des-hits sub-hits";
+    }
+    
+    #carrier-hits {
+    	grid-area: car-hits;
+    }
+    
+    #battle-hits {
+    	grid-area: bat-hits;
+    	padding-inline-start: 1.8em;
+    }
+    
+    #destroyer-hits {
+    	grid-area: des-hits;
+    }
+    
+    #submarine-hits {
+    	grid-area: sub-hits;
+    }
+    
+    #patrol-hits {
+    	grid-area: pat-hits;
     }
 
     .username {
@@ -452,5 +480,41 @@ dialog::backdrop{
         top: 95%;
         right: 50%;
         transform: translateX(50%);
+    }
+    
+        .ships {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        place-items: center;
+        grid-template-areas:
+        	"carrier carrier"
+        	"battleship battleship"
+        	"destroyer submarine"
+        	"patrol button";
+    }
+    
+    #carrier {
+    	grid-area: carrier;
+    }
+    
+    #battleship {
+    	grid-area: battleship;
+    }
+    
+    #destroyer {
+    	grid-area: destroyer
+    }
+    
+    #submarine {
+    	grid-area: submarine;
+    }
+    
+    #patrol {
+    	grid-area: patrol;
+    }
+    
+    .ships>button {
+    	grid-area: button;
+    	height: fit-content;
     }
 }

@@ -25,6 +25,7 @@
     <main class="place-main">
 
         <div class="ships">
+        	<div id="carrier">
             <span>
                 <button onclick="rotateElement('Carrier')" class="rotate-button">
                     <img src="rotate.png" width=15>
@@ -34,7 +35,9 @@
             <div class="ship-image carrier">
                 <img id="Carrier" src="carrier.png" width=200 class="carrier ship">
             </div>
+            </div>
 
+<div id="battleship">
             <span>
                 <button onclick="rotateElement('Battleship')" class="rotate-button">
                     <img src="rotate.png" width=15>
@@ -44,7 +47,9 @@
             <div class="ship-image battleship">
                 <img id="Battleship" src="battle.png" width=160 class="battleship ship">
             </div>
+        </div>
 
+<div id="destoyer">
             <span>
                 <button onclick="rotateElement('Destroyer')" class="rotate-button">
                     <img src="rotate.png" width=15>
@@ -54,7 +59,9 @@
             <div class="ship-image destroyer">
                 <img id="Destroyer" src="destroyer.png" width=120 class="destroyer ship">
             </div>
+            </div>
 
+<div id="submarine">
             <span>
                 <button onclick="rotateElement('Submarine')" class="rotate-button">
                     <img src="rotate.png" width=15>
@@ -64,7 +71,9 @@
             <div class="ship-image sub">
                 <img id="Submarine" src="sub.png" width=120 class="sub ship">
             </div>
+            </div>
 
+<div id="patrol">
             <span>
                 <button onclick="rotateElement('Patrol-Boat')" class="rotate-button">
                     <img src="rotate.png" width=15>
@@ -74,6 +83,8 @@
             <div class="ship-image patrol">
                 <img id="Patrol-Boat" src="patrol.png" width=80 class="patrol ship">
             </div>
+            </div>
+            
             <button class="submit-button" onclick="setShipPositions()">Set ships</button>
         </div>
 

@@ -109,10 +109,10 @@ public class MainController {
 
 		oppBoard = ai_service.getAIBoard();
 
-		model.addAttribute("shotOn", shotOn);
+		model.addAttribute("shotOn", "");
 		model.addAttribute("alertHead", "Ready to play?");
 		model.addAttribute("alertText", "Click on the board squares to take your shot");
-		model.addAttribute("modalType", modalType);
+		model.addAttribute("modalType", "");
 		model.addAttribute("myBoard", myBoard);
 		model.addAttribute("oppBoard", oppBoard);
 		model.addAttribute("hits", hits);
