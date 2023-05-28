@@ -86,7 +86,7 @@ public class MainController {
 		if (session.getAttribute("name") == null) {
 			return "redirect:login";
 		}
-		System.out.println("POST PLAY");
+		
 		myBoard = new ArrayList<Square>();
 		for (char r = 'A'; r <= 'J'; r++) {
 			for (int c = 1; c <= 10; c++) {
@@ -126,8 +126,9 @@ public class MainController {
 		if (session.getAttribute("name") == null) {
 			return "redirect:login";
 		}
-		System.out.println("\nGetPlay, winner: " + haveWinner);
+		
 		if (haveWinner) {
+			System.out.println("Winner: " + winnerName);
 			if (winnerName.equals(session.getAttribute("name").toString())) {
 				modalType = "winner";
 			} else {
@@ -152,7 +153,6 @@ public class MainController {
 	@PostMapping("/shoot")
 	public String postShoot(@RequestParam String shot, Model model, HttpSession session) {
 		shot = shot.toUpperCase();
-		System.out.println("Shot made on: " + shot);
 		int index = boardService.findSquare(shot, oppBoard);
 		Square sq = oppBoard.get(index);
 		sq.setShotMade();
@@ -161,7 +161,6 @@ public class MainController {
 		modalType = "player";
 
 		if (sq.isOccupied()) {
-			System.out.println("Hit on " + sq.getOccupied());
 			lastShotText = "You have HIT the ";
 			alertText = "Well done";
 
@@ -221,7 +220,6 @@ public class MainController {
 		} else {
 			lastShotText = "You missed...";
 			alertText = "Too bad, your opponents turn";
-			System.out.println("Miss");
 		}
 
 		return "redirect:play";
@@ -240,13 +238,11 @@ public class MainController {
 					myPatrolBoat);
 		}
 
-		System.out.println("AI shot made on: " + sq.getName());
 		shotOn = "Opponent shot on " + sq.getName();
 		lastAIShot = sq.getName();
 		sq.setShotMade();
 
 		if (sq.isOccupied()) {
-			System.out.println("Hit on " + sq.getOccupied());
 			lastAIHit = sq;
 			lastShotText = "Your opponent has HIT your ";
 			alertText = "Too bad";
@@ -302,7 +298,6 @@ public class MainController {
 		} else {
 			lastShotText = "Your opponent has missed...";
 			alertText = "That was lucky, your turn";
-			System.out.println("Miss");
 		}
 
 		return "redirect:play";
@@ -311,7 +306,6 @@ public class MainController {
 	private boolean meWinner() {
 		if (oppCarrier.sunk() && oppBattleship.sunk() && oppDestroyer.sunk() && oppSubmarine.sunk()
 				&& oppPatrolBoat.sunk()) {
-			System.out.println("MeWinner");
 			return true;
 		}
 		return false;

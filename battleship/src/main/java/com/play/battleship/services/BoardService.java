@@ -11,6 +11,13 @@ import com.play.battleship.models.Square;
 @Service
 public class BoardService {
 
+	/**
+	 * Sets the ship into the board positions given
+	 * @param board
+	 * @param coords
+	 * @return The board with new ship placed
+	 * @throws IllegalArgumentException if the the ship cannot be placed in the given positions
+	 */
 	public List<Square> SetBoard(List<Square> board, Coords coords) throws IllegalArgumentException {
 
 		System.out.println("Coords: " + coords.getName() + " Start: " + coords.getStart() + " End: " + coords.getEnd());
@@ -68,6 +75,12 @@ public class BoardService {
 		return board;
 	}
 
+	/**
+	 * Finds the index number of the given square
+	 * @param key
+	 * @param board
+	 * @return Index number
+	 */
 	public int findSquare(String key, List<Square> board) {
 		int a = -1;
 		for (int i = 0; i < board.size(); i++) {

@@ -26,6 +26,9 @@ public class AI_Service {
 		this.boardService = boardService;
 	}
 
+	/*
+	 * Finds the ship positions on the the board for the AI player
+	 */
 	public List<Square> getAIBoard() {
 		String[] ships = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol-Boat" };
 		int length = 0;
@@ -102,6 +105,11 @@ public class AI_Service {
 		return board;
 	}
 
+	/**
+	 * AI-Easy shot making
+	 * @param board
+	 * @return Square made shot on
+	 */
 	public Square aiShot_easy(List<Square> board) {
 		Square sq;
 
@@ -113,6 +121,17 @@ public class AI_Service {
 		return sq;
 	}
 
+	/**
+	 * AI-Hard shot making algorithm
+	 * @param board
+	 * @param lastHit
+	 * @param carrier
+	 * @param battleship
+	 * @param destroyer
+	 * @param submarine
+	 * @param patrolBoat
+	 * @return Square made shot on
+	 */
 	public Square aiShot_hard(List<Square> board, Square lastHit, Carrier carrier, Battle_ship battleship,
 			Destroyer destroyer, Submarine submarine, PatrolBoat patrolBoat) {
 		int unsunk_hits = 0;
@@ -136,8 +155,10 @@ public class AI_Service {
 			length = PatrolBoat.LENGTH;
 		}
 
+		// If there is a hit & unsunk ship
 		if (unsunk_hits > 0) {
 			index = boardService.findSquare(lastHit.getName(), board);
+			// If the ship has been hit once
 			if (unsunk_hits == 1) {
 				// Check enough space horizontal
 				if (spaceHorizontal(board, lastHit, length)) {
@@ -155,6 +176,7 @@ public class AI_Service {
 						index = index + 10;
 					}
 				}
+			// If the ship has been hit more than once
 			} else {
 				// Check horizontal alignment
 				if (alignmentHorizontal(board, lastHit)) {
@@ -186,6 +208,7 @@ public class AI_Service {
 
 		} else {
 
+			// Tries to find a random square two away from previous shots
 			boolean valid;
 			int a = 0;
 			do {
@@ -211,6 +234,13 @@ public class AI_Service {
 
 	}
 
+	/**
+	 * Finds if there is horizontal space for the ship on the board
+	 * @param board
+	 * @param lastHit
+	 * @param length
+	 * @return True if there is horizontal space
+	 */
 	private boolean spaceHorizontal(List<Square> board, Square lastHit, int length) {
 		final char rowCoord = lastHit.getName().charAt(0);
 		int spaces = 0;
@@ -232,6 +262,12 @@ public class AI_Service {
 		return spaces >= length - 1;
 	}
 
+	/**
+	 * Finds if the alignment of the ship is horizontal after more than one hit
+	 * @param board
+	 * @param lastHit
+	 * @return True if the ship is aligned horizontally
+	 */
 	private boolean alignmentHorizontal(List<Square> board, Square lastHit) {
 		int index = boardService.findSquare(lastHit.getName(), board);
 
