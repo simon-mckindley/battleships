@@ -85,7 +85,7 @@ h2 {
 .wait, .take-shot {
 	position: absolute;
     top: 20%;
-    right: 15%;
+    left: 65%;
     margin: 0;
     width: max-content;
     font-weight: bold;
@@ -197,7 +197,9 @@ h2 {
     background-color: blue;
 }
 
+
 /**** Your Board ****/
+
 .small-board {
     display: grid;
     gap: 1px;
@@ -232,9 +234,26 @@ h2 {
 	background-color: rgb(81 81 255);
 }
 
+.small-board-container h3, .icon-button {
+	display: none;
+}
+
 .small-title {
     margin: 0;
     text-align: center;
+}
+
+.your-last-shot-text, .opp-last-shot-text {
+	text-align: center;
+}
+
+.your-last-shot-text {
+	grid-area: 12 / 1 / 13 / 12;
+	margin-block: 0.5em;
+}
+
+.your-last-shot, .opp-last-shot {
+	font-weight: bold;
 }
 
 .label {
@@ -307,12 +326,27 @@ h2 {
     width: calc((clamp(2em, 3vw, 3em) * 2) + 0.4vw);
 }
 
-.winner {
+
+/***** Ending modals *****/
+
+#winner-modal {
+	border-color: var(--button-color);
+}
+
+#loser-modal {
+	border-color: blue;
+}
+
+#loser-modal h3 {
+	text-align: center;
+}
+
+.ending-modal-message {
 	display: flex;
     flex-direction: column;
     align-items: center;
     width: max-content;
-    margin: 15vh auto;
+    margin: 4vw;
 }
 
 .winner-name {
@@ -396,6 +430,21 @@ h2 {
 	text-decoration: none;
 }
 
+
+/***** Alert Modal *****/
+
+#modal {
+	min-width: 16em;
+	max-width: 80vw;
+}
+
+dialog::backdrop{
+	background: rgba(0 0 0 / 0.5);
+}
+
+
+/***** Login *****/
+
 .login-form {
     display: flex;
     flex-direction: column;
@@ -419,14 +468,6 @@ h2 {
     width: 60%;
 }
 
-dialog {
-	min-width: 16em;
-	max-width: 80vw;
-}
-
-dialog::backdrop{
-	background: rgba(0 0 0 / 0.5);
-}
 
 @media only screen and (max-width: 700px) {
     .place-main {
@@ -437,9 +478,63 @@ dialog::backdrop{
     .play-main {
         grid-template-areas:
             "gr2"
-            "gr1"
-            "gr3";
+            "gr1";
     }
+    
+    .grid-3 {
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100vw;
+    	height: 100vh;
+    	height: 100dvh;
+    	background-color: rgba(0 0 0 / 50%);
+    	display: none;
+    }
+    
+    .small-board-container {
+    	position: absolute;
+    	top: 15%;
+    	left: 50%;
+    	transform: translateX(-50%);
+    	background-color: var(--background-color);
+    	padding: 0.5em 2em 2em;
+    	border: medium solid black;
+    }
+    
+    .icon-button {
+    	position: absolute;
+    	display: block;
+    	padding: 0;
+    	border: none;
+    	background-color: transparent;
+    }
+    
+    .open-button {
+    	top: 50%;
+    	left: 3%;
+    	width: 4em;
+    	transform: translateY(-50%);
+    }
+    
+    .close-button {
+    	top: 0;
+    	right: 0;
+    	width: 3em;
+    }
+    
+    .icon-button img {
+    	display: block;
+    	width: 100%;
+    }
+    
+    .small-board-container h3 {
+		display: block;
+		text-align: center;
+		background-color: blue;
+		color: white;
+    	border-radius: 100px;
+	}
 
     .hits-container {
         display: grid;
@@ -479,6 +574,7 @@ dialog::backdrop{
     .take-shot, .wait {
         top: 95%;
         right: 50%;
+        left: unset;
         transform: translateX(50%);
     }
     

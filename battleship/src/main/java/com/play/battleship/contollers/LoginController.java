@@ -25,8 +25,8 @@ public class LoginController {
 			return "login";
 		}
 		
-		session.setAttribute("name", name.strip());
-		session.setAttribute("opponent", opponent.strip());
+		session.setAttribute("name", name.strip().toUpperCase());
+		session.setAttribute("opponent", opponent.strip().toUpperCase());
 		
 		return "redirect:place";
 	}

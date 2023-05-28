@@ -17,6 +17,9 @@
         <h1>Battleship</h1>
         <p th:text="${session.name}" class="username"></p>
         <p id="shot" class="take-shot"></p>
+        <button id="board-open" class="icon-button open-button" type="button">
+        	<img src="table_view.png">
+       	</button>
     </header>
     
     <dialog id="modal">
@@ -25,6 +28,29 @@
             <h3 th:text="${alertHead}"></h3>
             <p th:text="${alertText}"></p>
             <button id="modal-button" th:class="${modalType}" type="button">OK</button>
+        </div>
+    </dialog>
+    
+    <dialog id="winner-modal">
+    	<div class="ending-modal-message">
+        	<div class="winner-text">
+        		<span>W</span>
+        		<span>I</span>
+        		<span>N</span>
+        		<span>N</span>
+        		<span>E</span>
+        		<span>R</span>
+    		</div>
+        	<span class="winner-name" th:text="${winner}"></span>
+        	<a href="/login" class="submit-button win-button">Play Again</a>
+        </div>
+    </dialog>
+    
+    <dialog id="loser-modal">
+    	<div class="ending-modal-message">
+        	<h3>Oh no<br>You lost!</h3>
+        	<p>So sad</p>
+        	<a href="/login" class="submit-button win-button">Play Again</a>
         </div>
     </dialog>
 
@@ -206,16 +232,29 @@
             <button th:text="${oppBoard[97].shotMade}? ${oppBoard[97].occupied} : ''" th:class="${oppBoard[97].shotMade}? 'shot-square' : 'square'" name="shot" value="j8"></button>
             <button th:text="${oppBoard[98].shotMade}? ${oppBoard[98].occupied} : ''" th:class="${oppBoard[98].shotMade}? 'shot-square' : 'square'" name="shot" value="j9"></button>
             <button th:text="${oppBoard[99].shotMade}? ${oppBoard[99].occupied} : ''" th:class="${oppBoard[99].shotMade}? 'shot-square' : 'square'" name="shot" value="j10"></button>
+        
+        	<p class="your-last-shot-text">
+            	Your last shot: <span class="your-last-shot" th:text="${yourLastShot}"></span>
+            </p>
         </form>
 
         <div class="grid-3">
-            <p class="small-title">Your Board</p>
-            <div class="small-board">
-                <div th:each="square : ${myBoard}" 
-                	th:text="${square.getOccupied}" 
-                	th:attr="id=${square.getName}" 
-                	th:class="${square.getShotMade}? 'shot-small-square' : 'small-square'">
-                </div>
+        	<div class="small-board-container">
+        		<button id="board-close" class="icon-button close-button" type="button">
+        			<img src="close_icon.png">
+        		</button>
+        		<h3 th:text="${session.name}"></h3>
+            	<p class="small-title">Your Board</p>
+            	<div class="small-board">
+                	<div th:each="square : ${myBoard}" 
+                		th:text="${square.getOccupied}" 
+                		th:attr="id=${square.getName}" 
+                		th:class="${square.getShotMade}? 'shot-small-square' : 'small-square'">
+                	</div>
+            	</div>
+            	<p class="opp-last-shot-text">
+            		Last opponent shot: <span class="opp-last-shot" th:text="${aiLastShot}"></span>
+            	</p>
             </div>
         </div>
 

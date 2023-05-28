@@ -42,8 +42,10 @@ public class MainController {
 	private PatrolBoat myPatrolBoat;
 	private int[] hits = new int[5];
 	private Square lastAIHit;
+	private String lastAIShot = "";
+	private String lastYourShot = "";
 	private String shotOn = "Welcome";
-	private String lastHit = "";
+	private String lastShotText = "";
 	private String alertText = "";
 	private String modalType = "";
 	private boolean haveWinner;
@@ -126,17 +128,24 @@ public class MainController {
 		}
 		System.out.println("\nGetPlay, winner: " + haveWinner);
 		if (haveWinner) {
-			model.addAttribute("winner", winnerName);
-			return "win";
+			if (winnerName.equals(session.getAttribute("name").toString())) {
+				modalType = "winner";
+			} else {
+				modalType = "loser";
+			}
+
 		}
-		
+
 		model.addAttribute("shotOn", shotOn);
-		model.addAttribute("alertHead", lastHit);
+		model.addAttribute("alertHead", lastShotText);
 		model.addAttribute("alertText", alertText);
 		model.addAttribute("modalType", modalType);
 		model.addAttribute("myBoard", myBoard);
+		model.addAttribute("yourLastShot", lastYourShot);
 		model.addAttribute("oppBoard", oppBoard);
+		model.addAttribute("aiLastShot", lastAIShot);
 		model.addAttribute("hits", hits);
+		model.addAttribute("winner", winnerName);
 		return "play";
 	}
 
@@ -148,11 +157,12 @@ public class MainController {
 		Square sq = oppBoard.get(index);
 		sq.setShotMade();
 		shotOn = "Your shot on " + sq.getName();
+		lastYourShot = sq.getName();
 		modalType = "player";
-		
+
 		if (sq.isOccupied()) {
 			System.out.println("Hit on " + sq.getOccupied());
-			lastHit = "You have HIT the ";
+			lastShotText = "You have HIT the ";
 			alertText = "Well done";
 
 			switch (sq.getOccupied()) {
@@ -160,45 +170,45 @@ public class MainController {
 				oppCarrier.addHit();
 				hits[0] = oppCarrier.getHits();
 				if (oppCarrier.sunk()) {
-					lastHit = "You have SUNK the Carrier!";
+					lastShotText = "You have SUNK the Carrier!";
 				} else {
-					lastHit += "Carrier";
+					lastShotText += "Carrier";
 				}
 				break;
 			case "B":
 				oppBattleship.addHit();
 				hits[1] = oppBattleship.getHits();
 				if (oppBattleship.sunk()) {
-					lastHit = "You have SUNK the Battleship!";
+					lastShotText = "You have SUNK the Battleship!";
 				} else {
-					lastHit += "Battleship";
+					lastShotText += "Battleship";
 				}
 				break;
 			case "D":
 				oppDestroyer.addHit();
 				hits[2] = oppDestroyer.getHits();
 				if (oppDestroyer.sunk()) {
-					lastHit = "You have SUNK the Destroyer!";
+					lastShotText = "You have SUNK the Destroyer!";
 				} else {
-					lastHit += "Destroyer";
+					lastShotText += "Destroyer";
 				}
 				break;
 			case "S":
 				oppSubmarine.addHit();
 				hits[3] = oppSubmarine.getHits();
 				if (oppSubmarine.sunk()) {
-					lastHit = "You have SUNK the Submarine!";
+					lastShotText = "You have SUNK the Submarine!";
 				} else {
-					lastHit += "Submarine";
+					lastShotText += "Submarine";
 				}
 				break;
 			case "P":
 				oppPatrolBoat.addHit();
 				hits[4] = oppPatrolBoat.getHits();
 				if (oppPatrolBoat.sunk()) {
-					lastHit = "You have SUNK the Patrol Boat!";
+					lastShotText = "You have SUNK the Patrol Boat!";
 				} else {
-					lastHit += "Patrol Boat";
+					lastShotText += "Patrol Boat";
 				}
 				break;
 			}
@@ -209,8 +219,8 @@ public class MainController {
 				return "redirect:play";
 			}
 		} else {
-			lastHit = "You missed...";
-			alertText = "Too bad, try again";
+			lastShotText = "You missed...";
+			alertText = "Too bad, your opponents turn";
 			System.out.println("Miss");
 		}
 
@@ -223,62 +233,63 @@ public class MainController {
 		String name = session.getAttribute("opponent").toString();
 		modalType = "opponent";
 
-		if (name.equals("ai-easy")) {
+		if (name.equals("AI-EASY")) {
 			sq = ai_service.aiShot_easy(myBoard);
-		} else if (name.equals("ai-hard")) {
+		} else if (name.equals("AI-HARD")) {
 			sq = ai_service.aiShot_hard(myBoard, lastAIHit, myCarrier, myBattleship, myDestroyer, mySubmarine,
 					myPatrolBoat);
 		}
 
 		System.out.println("AI shot made on: " + sq.getName());
 		shotOn = "Opponent shot on " + sq.getName();
+		lastAIShot = sq.getName();
 		sq.setShotMade();
-		
+
 		if (sq.isOccupied()) {
 			System.out.println("Hit on " + sq.getOccupied());
 			lastAIHit = sq;
-			lastHit = "Your opponent has HIT your ";
+			lastShotText = "Your opponent has HIT your ";
 			alertText = "Too bad";
 
 			switch (sq.getOccupied()) {
 			case "C":
 				myCarrier.addHit();
 				if (myCarrier.sunk()) {
-					lastHit = "Your Carrier has been SUNK!";
+					lastShotText = "Your Carrier has been SUNK!";
 				} else {
-					lastHit += "Carrier";
+					lastShotText += "Carrier";
 				}
 				break;
 			case "B":
 				myBattleship.addHit();
 				if (myBattleship.sunk()) {
-					lastHit = "Your Battleship has been SUNK!";
+					lastShotText = "Your Battleship has been SUNK!";
 				} else {
-					lastHit += "Battleship";
+					lastShotText += "Battleship";
 				}
 				break;
 			case "D":
 				myDestroyer.addHit();
 				if (myDestroyer.sunk()) {
-					lastHit = "Your Destroyer has been SUNK!";
+					lastShotText = "Your Destroyer has been SUNK!";
 				} else {
-					lastHit += "Destroyer";
+					lastShotText += "Destroyer";
 				}
 				break;
 			case "S":
 				mySubmarine.addHit();
 				if (mySubmarine.sunk()) {
-					lastHit = "Your Submarine has been SUNK!";
+					lastShotText = "Your Submarine has been SUNK!";
 				} else {
-					lastHit += "Submarine";
+					lastShotText += "Submarine";
 				}
 				break;
 			case "P":
 				myPatrolBoat.addHit();
 				if (myPatrolBoat.sunk()) {
-					lastHit = "Your Patrol Boat has been SUNK!";
+					lastShotText = "Your Patrol Boat has been SUNK!";
 				} else {
-					lastHit += "Patrol Boat";
+					lastShotText += "Patrol Boat";
 				}
 				break;
 			}
@@ -289,11 +300,11 @@ public class MainController {
 				return "redirect:play";
 			}
 		} else {
-			lastHit = "Your opponent has missed...";
-			alertText = "That was lucky";
+			lastShotText = "Your opponent has missed...";
+			alertText = "That was lucky, your turn";
 			System.out.println("Miss");
 		}
-		
+
 		return "redirect:play";
 	}
 
