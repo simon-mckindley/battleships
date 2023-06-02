@@ -22,6 +22,26 @@
        	</button>
     </header>
     
+    <dialog id="animation-modal" th:class="${aniShip}">
+        <div class="cloud-cont">
+            <div class="cloud cloud-one"></div>
+            <div class="cloud cloud-two"></div>
+            <div class="cloud cloud-three"></div>
+        </div>
+        <div class="sun"></div>
+        <div class="ship-cont">
+        	<img id="ani-carrier" class="ani-ship" src="carrier.png" alt="">
+        	<img id="ani-battleship" class="ani-ship" src="battle.png" alt="">
+        	<img id="ani-destroyer" class="ani-ship" src="destroyer.png" alt="">
+        	<img id="ani-submarine" class="ani-ship" src="sub.png" alt="">
+        	<img id="ani-patrol" class="ani-ship" src="patrol.png" alt="">
+        </div>
+        <img id="explosion" th:class="${hit}" width="150" src="explosion.png" alt="">
+        <img id="splash" th:class="${miss}" src="splash.png" alt="">
+        <div class="sea back"></div>
+        <div class="sea front"></div>
+    </dialog>
+    
     <dialog id="modal">
         <div class="modal-message">
         	<p th:text="${shotOn}"></p>

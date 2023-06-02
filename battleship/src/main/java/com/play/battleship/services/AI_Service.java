@@ -107,6 +107,7 @@ public class AI_Service {
 
 	/**
 	 * AI-Easy shot making
+	 * 
 	 * @param board
 	 * @return Square made shot on
 	 */
@@ -123,6 +124,7 @@ public class AI_Service {
 
 	/**
 	 * AI-Hard shot making algorithm
+	 * 
 	 * @param board
 	 * @param lastHit
 	 * @param carrier
@@ -176,7 +178,7 @@ public class AI_Service {
 						index = index + 10;
 					}
 				}
-			// If the ship has been hit more than once
+				// If the ship has been hit more than once
 			} else {
 				// Check horizontal alignment
 				if (alignmentHorizontal(board, lastHit)) {
@@ -228,6 +230,11 @@ public class AI_Service {
 
 				a++;
 			} while (!valid && a < 50);
+
+			// Otherwise, any other space
+			while (board.get(index).getShotMade()) {
+				index = rand.nextInt(0, BOARD_SIZE * BOARD_SIZE);
+			}
 		}
 
 		return board.get(index);
@@ -236,6 +243,7 @@ public class AI_Service {
 
 	/**
 	 * Finds if there is horizontal space for the ship on the board
+	 * 
 	 * @param board
 	 * @param lastHit
 	 * @param length
@@ -264,6 +272,7 @@ public class AI_Service {
 
 	/**
 	 * Finds if the alignment of the ship is horizontal after more than one hit
+	 * 
 	 * @param board
 	 * @param lastHit
 	 * @return True if the ship is aligned horizontally

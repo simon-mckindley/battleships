@@ -431,6 +431,240 @@ h2 {
 	text-decoration: none;
 }
 
+/***** Animation Modal *****/
+
+#animation-modal {
+	position: relative;
+    height: 50%;
+    width: 50%;
+    padding: 0;
+    background-color: white;
+    overflow: hidden;
+}
+
+.cloud-cont {
+    position: relative;
+    top: 2%;
+    left: 5%;
+    height: 50%;
+    width: 50%;
+    animation: cloud-move 15s infinite linear;
+}
+
+.cloud {
+    position: absolute;
+    height: 35px;
+    width: 40px;
+    background-color: rgb(236, 236, 236);
+    border-radius: 100px;
+    box-shadow: 2px 2px 2px 2px lightgrey;
+}
+
+.cloud-one {
+    top: 20%;
+    left: 10%;
+}
+
+.cloud-two {
+    top: 16%;
+    left: calc(10% + 30px);
+}
+
+.cloud-three {
+    top: 18%;
+    left: calc(10% + 55px);
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    z-index: -1;
+    background-color: rgb(236, 236, 236);
+    border-radius: 100px;
+    box-shadow: 2px 2px 2px 2px lightgrey;
+}
+
+.cloud::before {
+    bottom: -30%;
+    left: -30%;
+}
+
+.cloud::after {
+    top: -30%;
+    right: -30%;
+}
+
+@keyframes cloud-move {
+    100% {
+    	left: 20%;
+    }
+}
+
+.sun {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 75px;
+    height: 75px;
+    background-color: yellow;
+    border-radius: 100px;
+    outline: yellow dotted 3px;
+    animation: sun-rotate 50s infinite linear;
+}
+
+@keyframes sun-rotate {
+    100% {
+         transform: rotate(360deg);
+    }
+}
+
+.ship-cont {
+	position: absolute;
+	bottom: 0;
+    left: 20%;
+    height: 100%
+}
+
+.ani-ship {
+    display: none;
+    position: absolute;
+    bottom: 33%;
+    z-index: -5;
+}
+
+.ship-display {
+	display: block;
+}
+
+.by-back {
+    animation: by-back 10s ease 3s;
+}
+
+.by-front {
+    animation: by-front 10s ease 3s;
+}
+
+.rock {
+    animation: rock 10s linear 3s;
+}
+
+@keyframes by-front {
+    30% {
+    	transform: rotate(50deg);
+        bottom: 33%;
+    }
+
+    100% {
+    	transform: rotate(45deg);
+        bottom: -5%;
+    }
+}
+
+@keyframes by-back {
+    30% {
+    	transform: rotate(-50deg);
+        bottom: 33%;
+    }
+
+    100% {
+        transform: rotate(-45deg);
+        bottom: -5%;
+    }
+}
+
+@keyframes rock {
+     0% {
+                transform: rotate(0deg);
+            }
+
+            15% {
+                transform: rotate(12deg);
+            }
+
+            30% {
+                transform: rotate(-12deg);
+                bottom: 33%;
+            }
+
+            45% {
+                transform: rotate(12deg);
+            }
+
+            60% {
+                transform: rotate(-12deg);
+            }
+
+            75% {
+                transform: rotate(12deg);
+            }
+
+            90% {
+                transform: rotate(-12deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+                bottom: 10%;
+            }
+        }
+
+        #explosion {
+            position: absolute;
+            top: 35%;
+            left: 25%;
+            width: 110px;
+            z-index: 50;
+            opacity: 0;
+        }
+
+        #splash {
+            position: absolute;
+            width: 80px;
+            top: 30%;
+            left: 38%;
+            opacity: 0;
+        }
+
+        .show {
+            animation: show-recede 5s linear 1s;
+        }
+
+        @keyframes show-recede {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .sea {
+            --circle-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+        }
+
+        .back {
+            background: radial-gradient(var(--circle-radius) at top, transparent 98%, seagreen) 0 / calc(var(--circle-radius) * 2) 101%;
+        }
+
+        .front {
+            background: radial-gradient(var(--circle-radius) at top, transparent 98%, rgb(91, 91, 236)) calc(var(--circle-radius) / 2) / calc(var(--circle-radius) * 2) 101%;
+            animation: wave 5000ms infinite;
+        }
+
+        @keyframes wave {
+            50% {
+                background-position-x: calc(var(--circle-radius) * 1.5);
+            }
+        }
+
 
 /***** Alert Modal *****/
 

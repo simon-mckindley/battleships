@@ -41,6 +41,9 @@ public class MainController {
 	private Submarine mySubmarine;
 	private PatrolBoat myPatrolBoat;
 	private int[] hits = new int[5];
+	private String shotStatus = "";
+	private String hitClass = "";
+	private String missClass = "";
 	private Square lastAIHit;
 	private String lastAIShot = "";
 	private String lastYourShot = "";
@@ -111,6 +114,7 @@ public class MainController {
 
 		oppBoard = ai_service.getAIBoard();
 
+		model.addAttribute("ani-ship", "ship-none");
 		model.addAttribute("shotOn", "");
 		model.addAttribute("alertHead", "Ready to play?");
 		model.addAttribute("alertText", "Click on the board squares to take your shot");
@@ -137,6 +141,9 @@ public class MainController {
 
 		}
 
+		model.addAttribute("aniShip", shotStatus);
+		model.addAttribute("hit", hitClass);
+		model.addAttribute("miss", missClass);
 		model.addAttribute("shotOn", shotOn);
 		model.addAttribute("alertHead", lastShotText);
 		model.addAttribute("alertText", alertText);
@@ -163,13 +170,17 @@ public class MainController {
 		if (sq.isOccupied()) {
 			lastShotText = "You have HIT the ";
 			alertText = "Well done";
+			hitClass = "show";
+			missClass = "";
 
 			switch (sq.getOccupied()) {
 			case "C":
 				oppCarrier.addHit();
 				hits[0] = oppCarrier.getHits();
+				shotStatus = "carrier";
 				if (oppCarrier.sunk()) {
 					lastShotText = "You have SUNK the Carrier!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Carrier";
 				}
@@ -177,8 +188,10 @@ public class MainController {
 			case "B":
 				oppBattleship.addHit();
 				hits[1] = oppBattleship.getHits();
+				shotStatus = "battleship";
 				if (oppBattleship.sunk()) {
 					lastShotText = "You have SUNK the Battleship!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Battleship";
 				}
@@ -186,8 +199,10 @@ public class MainController {
 			case "D":
 				oppDestroyer.addHit();
 				hits[2] = oppDestroyer.getHits();
+				shotStatus = "destroyer";
 				if (oppDestroyer.sunk()) {
 					lastShotText = "You have SUNK the Destroyer!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Destroyer";
 				}
@@ -195,8 +210,10 @@ public class MainController {
 			case "S":
 				oppSubmarine.addHit();
 				hits[3] = oppSubmarine.getHits();
+				shotStatus = "submarine";
 				if (oppSubmarine.sunk()) {
 					lastShotText = "You have SUNK the Submarine!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Submarine";
 				}
@@ -204,8 +221,10 @@ public class MainController {
 			case "P":
 				oppPatrolBoat.addHit();
 				hits[4] = oppPatrolBoat.getHits();
+				shotStatus = "patrolboat";
 				if (oppPatrolBoat.sunk()) {
 					lastShotText = "You have SUNK the Patrol Boat!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Patrol Boat";
 				}
@@ -220,6 +239,9 @@ public class MainController {
 		} else {
 			lastShotText = "You missed...";
 			alertText = "Too bad, your opponents turn";
+			shotStatus = "ship-none";
+			hitClass = "";
+			missClass = "show";
 		}
 
 		return "redirect:play";
@@ -246,44 +268,56 @@ public class MainController {
 			lastAIHit = sq;
 			lastShotText = "Your opponent has HIT your ";
 			alertText = "Too bad";
+			hitClass = "show";
+			missClass = "";
 
 			switch (sq.getOccupied()) {
 			case "C":
 				myCarrier.addHit();
+				shotStatus = "carrier";
 				if (myCarrier.sunk()) {
 					lastShotText = "Your Carrier has been SUNK!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Carrier";
 				}
 				break;
 			case "B":
 				myBattleship.addHit();
+				shotStatus = "battleship";
 				if (myBattleship.sunk()) {
 					lastShotText = "Your Battleship has been SUNK!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Battleship";
 				}
 				break;
 			case "D":
 				myDestroyer.addHit();
+				shotStatus = "destroyer";
 				if (myDestroyer.sunk()) {
 					lastShotText = "Your Destroyer has been SUNK!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Destroyer";
 				}
 				break;
 			case "S":
 				mySubmarine.addHit();
+				shotStatus = "submarine";
 				if (mySubmarine.sunk()) {
 					lastShotText = "Your Submarine has been SUNK!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Submarine";
 				}
 				break;
 			case "P":
 				myPatrolBoat.addHit();
+				shotStatus = "patrolboat";
 				if (myPatrolBoat.sunk()) {
 					lastShotText = "Your Patrol Boat has been SUNK!";
+					shotStatus += " sunk";
 				} else {
 					lastShotText += "Patrol Boat";
 				}
@@ -298,6 +332,9 @@ public class MainController {
 		} else {
 			lastShotText = "Your opponent has missed...";
 			alertText = "That was lucky, your turn";
+			shotStatus = "ship-none";
+			hitClass = "";
+			missClass = "show";
 		}
 
 		return "redirect:play";
