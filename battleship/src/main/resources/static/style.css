@@ -30,6 +30,8 @@ header {
     display: grid;
     gap: 2em;
     width: max-content;
+    min-height: 80vh;
+    align-content: center;
     margin: 2em auto;
     grid-template-areas:
         "gr1 gr2 gr3";
@@ -836,10 +838,10 @@ dialog::backdrop{
     }
     
     .take-shot, .wait {
-        top: 95%;
-        right: 50%;
-        left: unset;
-        transform: translateX(50%);
+        top: 100%;
+        right: 0;
+        left: 0;
+        margin-inline: auto;
     }
     
         .ships {

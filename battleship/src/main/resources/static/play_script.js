@@ -15,7 +15,7 @@ for (butt of shotSmallSquare) {
 	}
 }
 
-
+// Modals
 const aniModal = document.getElementById('animation-modal');
 const alertModal = document.getElementById('modal');
 const modalButton = document.getElementById('modal-button');
@@ -45,31 +45,31 @@ if (document.querySelector('.show') !== null) {
 
 	if (!aniModal.classList.contains('ship-none')) {
 		console.log("Hit...");
-		if (document.querySelector('.carrier') !== null) {
+		if (aniModal.classList.contains('carrier')) {
 			const carImg = document.getElementById('ani-carrier');
 			carImg.classList.add('ship-display');
 			if (sunkNumber > 0) {
 				carImg.classList.add(sunkClass);
 			}
-		} else if (document.querySelector('.battleship') !== null) {
+		} else if (aniModal.classList.contains('battleship')) {
 			const batImg = document.getElementById('ani-battleship');
 			batImg.classList.add('ship-display');
 			if (sunkNumber > 0) {
 				batImg.classList.add(sunkClass);
 			}
-		} else if (document.querySelector('.destroyer') !== null) {
+		} else if (aniModal.classList.contains('destroyer')) {
 			const destImg = document.getElementById('ani-destroyer');
 			destImg.classList.add('ship-display');
 			if (sunkNumber > 0) {
 				destImg.classList.add(sunkClass);
 			}
-		} else if (document.querySelector('.submarine') !== null) {
+		} else if (aniModal.classList.contains('submarine')) {
 			const subImg = document.getElementById('ani-submarine');
 			subImg.classList.add('ship-display');
 			if (sunkNumber > 0) {
 				subImg.classList.add(sunkClass);
 			}
-		} else if (document.querySelector('.patrolboat') !== null) {
+		} else if (aniModal.classList.contains('patrolboat')) {
 			const patImg = document.getElementById('ani-patrol');
 			patImg.classList.add('ship-display');
 			if (sunkNumber > 0) {
@@ -91,14 +91,10 @@ if (document.querySelector('.show') !== null) {
 
 
 // Set elements according to whose shot it is
-const playerButton = document.querySelector('.player');
-const opponentButton = document.querySelector('.opponent');
-const winnerButton = document.querySelector('.winner');
-const loserButton = document.querySelector('.loser');
 const shot = document.getElementById("shot");
 
-if (playerButton !== null) {
-	playerButton.addEventListener('click', () => {
+if (modalButton.classList.contains('player')) {
+	modalButton.addEventListener('click', () => {
 		const squares = document.getElementsByClassName('square');
 		for (sq of squares) {
 			sq.disabled = true;
@@ -107,28 +103,26 @@ if (playerButton !== null) {
 		shot.innerHTML = "Waiting for opponent";
 		opponentTurn();
 	})
-} else if (opponentButton !== null) {
-	opponentButton.addEventListener('click', () => {
+} else if (modalButton.classList.contains('opponent')) {
+	modalButton.addEventListener('click', () => {
 		shot.className = "take-shot";
 		shot.innerHTML = "Take your shot !";
 	})
-} else if (winnerButton !== null) {
-	winnerButton.addEventListener('click', () => {
+} else if (modalButton.classList.contains('winner')) {
+	modalButton.addEventListener('click', () => {
 		document.getElementById('winner-modal').showModal();
 	})
-} else if (loserButton !== null) {
-	loserButton.addEventListener('click', () => {
+} else if (modalButton.classList.contains('loser')) {
+	modalButton.addEventListener('click', () => {
 		document.getElementById('loser-modal').showModal();
 	})
 }
 
 function opponentTurn() {
 	console.log("Waiting......");
-	setTimeout(takeShot, 2000);
-
-	function takeShot() {
+	setTimeout(() => {
 		document.getElementById('get-form').submit();
-	}
+	}, 2000);
 }
 
 
