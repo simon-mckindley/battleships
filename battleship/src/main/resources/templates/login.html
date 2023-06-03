@@ -20,7 +20,7 @@
     <main>
 
         <form action="#" th:action="@{/login}" method="post" class="login-form">
-            <input placeholder="Enter your name" type="text" name="name" class="login-input" maxlength="15" required>
+            <input th:value="${username}" placeholder="Enter your name" type="text" name="name" class="login-input" maxlength="15" required>
             <select name="opponent" class="login-input" required>
                 <option value="">Select an opponent</option>
                 <option value="ai-easy">AI - Easy</option>

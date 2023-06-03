@@ -210,7 +210,7 @@ public class AI_Service {
 
 		} else {
 
-			// Tries to find a random square two away from previous shots
+			// Tries to find a random square two away from previous shots (50 tries)
 			boolean valid;
 			int a = 0;
 			do {
