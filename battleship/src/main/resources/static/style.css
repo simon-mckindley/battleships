@@ -437,8 +437,7 @@ h2 {
 
 #animation-modal {
 	position: relative;
-    height: 50%;
-    max-height: 20em;
+    height: 20em;
     width: 50%;
     padding: 0;
     background-color: white;
