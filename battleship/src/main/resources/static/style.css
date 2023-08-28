@@ -843,7 +843,7 @@ dialog::backdrop{
         margin-inline: auto;
     }
     
-        .ships {
+    .ships {
         display: grid;
         grid-template-columns: 1fr 1fr;
         place-items: center;
@@ -854,23 +854,23 @@ dialog::backdrop{
         	"patrol button";
     }
     
-    #carrier {
+    #carrier-wrapper {
     	grid-area: carrier;
     }
     
-    #battleship {
+    #battleship-wrapper {
     	grid-area: battleship;
     }
     
-    #destroyer {
+    #destroyer-wrapper {
     	grid-area: destroyer
     }
     
-    #submarine {
+    #submarine-wrapper {
     	grid-area: submarine;
     }
     
-    #patrol {
+    #patrol-wrapper {
     	grid-area: patrol;
     }
     

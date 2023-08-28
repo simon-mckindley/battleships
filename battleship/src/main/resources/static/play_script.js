@@ -93,6 +93,7 @@ if (document.querySelector('.show') !== null) {
 // Set elements according to whose shot it is
 const shot = document.getElementById("shot");
 
+//**** If statements should be inside eb=vent listener
 if (modalButton.classList.contains('player')) {
 	modalButton.addEventListener('click', () => {
 		const squares = document.getElementsByClassName('square');

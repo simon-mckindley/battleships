@@ -1,6 +1,7 @@
 package com.play.battleship.contollers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -77,9 +78,7 @@ public class MainController {
 		mySubmarine = new Submarine();
 		myPatrolBoat = new PatrolBoat();
 
-		for (int a = 0; a < hits.length; a++) {
-			hits[a] = 0;
-		}
+		Arrays.fill(hits, 0);
 
 		return "place";
 	}
@@ -90,7 +89,7 @@ public class MainController {
 			return "redirect:login";
 		}
 		
-		myBoard = new ArrayList<Square>();
+		myBoard = new ArrayList<>();
 		for (char r = 'A'; r <= 'J'; r++) {
 			for (int c = 1; c <= 10; c++) {
 				myBoard.add(new Square(String.format("%c%d", r, c)));
@@ -98,15 +97,15 @@ public class MainController {
 		}
 
 		try {
-			myBoard = boardService.SetBoard(myBoard, new Coords("Carrier", request.getParameter("carrier").toString()));
+			myBoard = boardService.SetBoard(myBoard, new Coords("Carrier", request.getParameter("carrier")));
 			myBoard = boardService.SetBoard(myBoard,
-					new Coords("Battleship", request.getParameter("battleship").toString()));
+					new Coords("Battleship", request.getParameter("battleship")));
 			myBoard = boardService.SetBoard(myBoard,
-					new Coords("Destroyer", request.getParameter("destroyer").toString()));
+					new Coords("Destroyer", request.getParameter("destroyer")));
 			myBoard = boardService.SetBoard(myBoard,
-					new Coords("Submarine", request.getParameter("submarine").toString()));
+					new Coords("Submarine", request.getParameter("submarine")));
 			myBoard = boardService.SetBoard(myBoard,
-					new Coords("Patrol-Boat", request.getParameter("patrol").toString()));
+					new Coords("Patrol-Boat", request.getParameter("patrol")));
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			return "redirect:place";
@@ -174,61 +173,61 @@ public class MainController {
 			missClass = "";
 
 			switch (sq.getOccupied()) {
-			case "C":
-				oppCarrier.addHit();
-				hits[0] = oppCarrier.getHits();
-				shotStatus = "carrier";
-				if (oppCarrier.sunk()) {
-					lastShotText = "You have SUNK the Carrier!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Carrier";
+				case "C" -> {
+					oppCarrier.addHit();
+					hits[0] = oppCarrier.getHits();
+					shotStatus = "carrier";
+					if (oppCarrier.sunk()) {
+						lastShotText = "You have SUNK the Carrier!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Carrier";
+					}
 				}
-				break;
-			case "B":
-				oppBattleship.addHit();
-				hits[1] = oppBattleship.getHits();
-				shotStatus = "battleship";
-				if (oppBattleship.sunk()) {
-					lastShotText = "You have SUNK the Battleship!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Battleship";
+				case "B" -> {
+					oppBattleship.addHit();
+					hits[1] = oppBattleship.getHits();
+					shotStatus = "battleship";
+					if (oppBattleship.sunk()) {
+						lastShotText = "You have SUNK the Battleship!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Battleship";
+					}
 				}
-				break;
-			case "D":
-				oppDestroyer.addHit();
-				hits[2] = oppDestroyer.getHits();
-				shotStatus = "destroyer";
-				if (oppDestroyer.sunk()) {
-					lastShotText = "You have SUNK the Destroyer!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Destroyer";
+				case "D" -> {
+					oppDestroyer.addHit();
+					hits[2] = oppDestroyer.getHits();
+					shotStatus = "destroyer";
+					if (oppDestroyer.sunk()) {
+						lastShotText = "You have SUNK the Destroyer!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Destroyer";
+					}
 				}
-				break;
-			case "S":
-				oppSubmarine.addHit();
-				hits[3] = oppSubmarine.getHits();
-				shotStatus = "submarine";
-				if (oppSubmarine.sunk()) {
-					lastShotText = "You have SUNK the Submarine!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Submarine";
+				case "S" -> {
+					oppSubmarine.addHit();
+					hits[3] = oppSubmarine.getHits();
+					shotStatus = "submarine";
+					if (oppSubmarine.sunk()) {
+						lastShotText = "You have SUNK the Submarine!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Submarine";
+					}
 				}
-				break;
-			case "P":
-				oppPatrolBoat.addHit();
-				hits[4] = oppPatrolBoat.getHits();
-				shotStatus = "patrolboat";
-				if (oppPatrolBoat.sunk()) {
-					lastShotText = "You have SUNK the Patrol Boat!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Patrol Boat";
+				case "P" -> {
+					oppPatrolBoat.addHit();
+					hits[4] = oppPatrolBoat.getHits();
+					shotStatus = "patrolboat";
+					if (oppPatrolBoat.sunk()) {
+						lastShotText = "You have SUNK the Patrol Boat!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Patrol Boat";
+					}
 				}
-				break;
 			}
 
 			haveWinner = meWinner();
@@ -272,56 +271,56 @@ public class MainController {
 			missClass = "";
 
 			switch (sq.getOccupied()) {
-			case "C":
-				myCarrier.addHit();
-				shotStatus = "carrier";
-				if (myCarrier.sunk()) {
-					lastShotText = "Your Carrier has been SUNK!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Carrier";
+				case "C" -> {
+					myCarrier.addHit();
+					shotStatus = "carrier";
+					if (myCarrier.sunk()) {
+						lastShotText = "Your Carrier has been SUNK!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Carrier";
+					}
 				}
-				break;
-			case "B":
-				myBattleship.addHit();
-				shotStatus = "battleship";
-				if (myBattleship.sunk()) {
-					lastShotText = "Your Battleship has been SUNK!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Battleship";
+				case "B" -> {
+					myBattleship.addHit();
+					shotStatus = "battleship";
+					if (myBattleship.sunk()) {
+						lastShotText = "Your Battleship has been SUNK!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Battleship";
+					}
 				}
-				break;
-			case "D":
-				myDestroyer.addHit();
-				shotStatus = "destroyer";
-				if (myDestroyer.sunk()) {
-					lastShotText = "Your Destroyer has been SUNK!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Destroyer";
+				case "D" -> {
+					myDestroyer.addHit();
+					shotStatus = "destroyer";
+					if (myDestroyer.sunk()) {
+						lastShotText = "Your Destroyer has been SUNK!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Destroyer";
+					}
 				}
-				break;
-			case "S":
-				mySubmarine.addHit();
-				shotStatus = "submarine";
-				if (mySubmarine.sunk()) {
-					lastShotText = "Your Submarine has been SUNK!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Submarine";
+				case "S" -> {
+					mySubmarine.addHit();
+					shotStatus = "submarine";
+					if (mySubmarine.sunk()) {
+						lastShotText = "Your Submarine has been SUNK!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Submarine";
+					}
 				}
-				break;
-			case "P":
-				myPatrolBoat.addHit();
-				shotStatus = "patrolboat";
-				if (myPatrolBoat.sunk()) {
-					lastShotText = "Your Patrol Boat has been SUNK!";
-					shotStatus += " sunk";
-				} else {
-					lastShotText += "Patrol Boat";
+				case "P" -> {
+					myPatrolBoat.addHit();
+					shotStatus = "patrolboat";
+					if (myPatrolBoat.sunk()) {
+						lastShotText = "Your Patrol Boat has been SUNK!";
+						shotStatus += " sunk";
+					} else {
+						lastShotText += "Patrol Boat";
+					}
 				}
-				break;
 			}
 
 			haveWinner = oppWinner();
@@ -341,19 +340,13 @@ public class MainController {
 	}
 
 	private boolean meWinner() {
-		if (oppCarrier.sunk() && oppBattleship.sunk() && oppDestroyer.sunk() && oppSubmarine.sunk()
-				&& oppPatrolBoat.sunk()) {
-			return true;
-		}
-		return false;
+		return oppCarrier.sunk() && oppBattleship.sunk() && oppDestroyer.sunk() && oppSubmarine.sunk()
+				&& oppPatrolBoat.sunk();
 	}
 
 	private boolean oppWinner() {
-		if (myCarrier.sunk() && myBattleship.sunk() && myDestroyer.sunk() && mySubmarine.sunk()
-				&& myPatrolBoat.sunk()) {
-			return true;
-		}
-		return false;
+		return myCarrier.sunk() && myBattleship.sunk() && myDestroyer.sunk() && mySubmarine.sunk()
+				&& myPatrolBoat.sunk();
 	}
 
 }

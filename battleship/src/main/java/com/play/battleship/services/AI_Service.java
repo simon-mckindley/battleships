@@ -27,7 +27,7 @@ public class AI_Service {
 	}
 
 	/*
-	 * Finds the ship positions on the the board for the AI player
+	 * Finds the ship positions on the board for the AI player
 	 */
 	public List<Square> getAIBoard() {
 		String[] ships = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol-Boat" };
@@ -44,21 +44,11 @@ public class AI_Service {
 			boolean shipSet = false;
 
 			switch (ship) {
-			case "Carrier":
-				length = Carrier.LENGTH;
-				break;
-			case "Battleship":
-				length = Battle_ship.LENGTH;
-				break;
-			case "Destroyer":
-				length = Destroyer.LENGTH;
-				break;
-			case "Submarine":
-				length = Submarine.LENGTH;
-				break;
-			case "Patrol-Boat":
-				length = PatrolBoat.LENGTH;
-				break;
+				case "Carrier" -> length = Carrier.LENGTH;
+				case "Battleship" -> length = Battle_ship.LENGTH;
+				case "Destroyer" -> length = Destroyer.LENGTH;
+				case "Submarine" -> length = Submarine.LENGTH;
+				case "Patrol-Boat" -> length = PatrolBoat.LENGTH;
 			}
 
 			do {
@@ -108,7 +98,7 @@ public class AI_Service {
 	/**
 	 * AI-Easy shot making
 	 * 
-	 * @param board
+	 * @param board Players board
 	 * @return Square made shot on
 	 */
 	public Square aiShot_easy(List<Square> board) {
@@ -125,13 +115,13 @@ public class AI_Service {
 	/**
 	 * AI-Hard shot making algorithm
 	 * 
-	 * @param board
-	 * @param lastHit
-	 * @param carrier
-	 * @param battleship
-	 * @param destroyer
-	 * @param submarine
-	 * @param patrolBoat
+	 * @param board Players board
+	 * @param lastHit Last hit location
+	 * @param carrier Players carrier
+	 * @param battleship Players battleship
+	 * @param destroyer Players destroyer
+	 * @param submarine Players sub
+	 * @param patrolBoat Players patrol boat
 	 * @return Square made shot on
 	 */
 	public Square aiShot_hard(List<Square> board, Square lastHit, Carrier carrier, Battle_ship battleship,
@@ -244,9 +234,9 @@ public class AI_Service {
 	/**
 	 * Finds if there is horizontal space for the ship on the board
 	 * 
-	 * @param board
-	 * @param lastHit
-	 * @param length
+	 * @param board Players board
+	 * @param lastHit Last hit location
+	 * @param length Length of the ship last hit
 	 * @return True if there is horizontal space
 	 */
 	private boolean spaceHorizontal(List<Square> board, Square lastHit, int length) {
@@ -273,8 +263,8 @@ public class AI_Service {
 	/**
 	 * Finds if the alignment of the ship is horizontal after more than one hit
 	 * 
-	 * @param board
-	 * @param lastHit
+	 * @param board Players board
+	 * @param lastHit Last hit location
 	 * @return True if the ship is aligned horizontally
 	 */
 	private boolean alignmentHorizontal(List<Square> board, Square lastHit) {
@@ -285,12 +275,8 @@ public class AI_Service {
 			return true;
 		}
 
-		if ((index - 1 >= 0) && (board.get(index - 1).getName().charAt(0) == lastHit.getName().charAt(0))
-				&& board.get(index - 1).getShotMade() && board.get(index - 1).isOccupied()) {
-			return true;
-		}
-
-		return false;
+		return (index - 1 >= 0) && (board.get(index - 1).getName().charAt(0) == lastHit.getName().charAt(0))
+				&& board.get(index - 1).getShotMade() && board.get(index - 1).isOccupied();
 	}
 
 }
