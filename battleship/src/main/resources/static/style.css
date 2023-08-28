@@ -173,7 +173,7 @@ h2 {
     background-color: var(--half-background-color);
 }
 
-.square:hover, .square:focus {
+.square:not([disabled]):hover, .square:focus {
     background-color: var(--background-color);
 }
 
@@ -187,18 +187,9 @@ h2 {
     background-color: var(--half-button-color);
 }
 
-.shot-square:hover, .shot-square:focus {
-    background-color: var(--button-color);
-}
-
 .missed-square {
 	background-color: rgb(0 0 255 / 50%);
 }
-
-.missed-square:hover, .missed-square:focus {
-    background-color: blue;
-}
-
 
 /**** Your Board ****/
 

@@ -93,9 +93,8 @@ if (document.querySelector('.show') !== null) {
 // Set elements according to whose shot it is
 const shot = document.getElementById("shot");
 
-//**** If statements should be inside eb=vent listener
+modalButton.addEventListener('click', ()=> {
 if (modalButton.classList.contains('player')) {
-	modalButton.addEventListener('click', () => {
 		const squares = document.getElementsByClassName('square');
 		for (sq of squares) {
 			sq.disabled = true;
@@ -103,21 +102,41 @@ if (modalButton.classList.contains('player')) {
 		shot.className = "wait";
 		shot.innerHTML = "Waiting for opponent";
 		opponentTurn();
-	})
 } else if (modalButton.classList.contains('opponent')) {
-	modalButton.addEventListener('click', () => {
 		shot.className = "take-shot";
 		shot.innerHTML = "Take your shot !";
-	})
 } else if (modalButton.classList.contains('winner')) {
-	modalButton.addEventListener('click', () => {
 		document.getElementById('winner-modal').showModal();
-	})
 } else if (modalButton.classList.contains('loser')) {
-	modalButton.addEventListener('click', () => {
 		document.getElementById('loser-modal').showModal();
-	})
 }
+});
+
+//**** If statements should be inside eb=vent listener
+//if (modalButton.classList.contains('player')) {
+//	modalButton.addEventListener('click', () => {
+//		const squares = document.getElementsByClassName('square');
+//		for (sq of squares) {
+//			sq.disabled = true;
+//		}
+//		shot.className = "wait";
+//		shot.innerHTML = "Waiting for opponent";
+//		opponentTurn();
+//	})
+//} else if (modalButton.classList.contains('opponent')) {
+//	modalButton.addEventListener('click', () => {
+//		shot.className = "take-shot";
+//		shot.innerHTML = "Take your shot !";
+//	})
+//} else if (modalButton.classList.contains('winner')) {
+//	modalButton.addEventListener('click', () => {
+//		document.getElementById('winner-modal').showModal();
+//	})
+//} else if (modalButton.classList.contains('loser')) {
+//	modalButton.addEventListener('click', () => {
+//		document.getElementById('loser-modal').showModal();
+//	})
+//}
 
 function opponentTurn() {
 	console.log("Waiting......");
