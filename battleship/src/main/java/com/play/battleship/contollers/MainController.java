@@ -29,8 +29,8 @@ public class MainController {
 	private List<Square> myBoard;
 	private List<Square> oppBoard;
 
-	private BoardService boardService;
-	private AI_Service ai_service;
+	private final BoardService boardService;
+	private final AI_Service ai_service;
 	private Carrier oppCarrier;
 	private Battle_ship oppBattleship;
 	private Destroyer oppDestroyer;

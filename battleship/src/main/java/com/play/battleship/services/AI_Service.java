@@ -17,7 +17,7 @@ import com.play.battleship.models.Submarine;
 @Service
 public class AI_Service {
 
-	private BoardService boardService;
+	private final BoardService boardService;
 
 	Random rand = new Random();
 	final int BOARD_SIZE = 10;
