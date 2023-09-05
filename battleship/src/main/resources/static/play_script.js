@@ -5,6 +5,8 @@ for (butt of shotButtons) {
 	butt.disabled = true;
 	if (butt.innerHTML == " ") {
 		butt.classList.add('missed-square');
+	} else {
+	    butt.classList.add('hit-square');
 	}
 }
 

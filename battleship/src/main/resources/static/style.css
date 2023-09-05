@@ -184,6 +184,9 @@ h2 {
     font-weight: bold;
     padding: 0;
     border: none;
+}
+
+.hit-square {
     background-color: var(--half-button-color);
 }
 
