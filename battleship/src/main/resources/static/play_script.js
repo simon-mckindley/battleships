@@ -96,7 +96,7 @@ if (document.querySelector('.show') !== null) {
 const shot = document.getElementById("shot");
 
 modalButton.addEventListener('click', ()=> {
-if (modalButton.classList.contains('player')) {
+    if (modalButton.classList.contains('player')) {
 		const squares = document.getElementsByClassName('square');
 		for (sq of squares) {
 			sq.disabled = true;
@@ -104,14 +104,14 @@ if (modalButton.classList.contains('player')) {
 		shot.className = "wait";
 		shot.innerHTML = "Waiting for opponent";
 		opponentTurn();
-} else if (modalButton.classList.contains('opponent')) {
+    } else if (modalButton.classList.contains('opponent')) {
 		shot.className = "take-shot";
 		shot.innerHTML = "Take your shot !";
-} else if (modalButton.classList.contains('winner')) {
+    } else if (modalButton.classList.contains('winner')) {
 		document.getElementById('winner-modal').showModal();
-} else if (modalButton.classList.contains('loser')) {
+    } else if (modalButton.classList.contains('loser')) {
 		document.getElementById('loser-modal').showModal();
-}
+    }
 });
 
 

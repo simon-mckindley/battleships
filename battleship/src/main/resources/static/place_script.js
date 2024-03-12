@@ -216,7 +216,7 @@ function setShipPositions() {
         document.getElementById('submarine-input').value = shipCoords.get('Submarine').start + '-' + shipCoords.get('Submarine').end;
         document.getElementById('patrol-input').value = shipCoords.get('Patrol-Boat').start + '-' + shipCoords.get('Patrol-Boat').end;
         playButton.style.display = 'block';
-        head.innerHTML = "All ships correctly set";
+        head.innerText = "All ships correctly set";
     } else {
         let errShips = "";
         for (let i = 0; i < unsetShips.length; i++) {
@@ -226,7 +226,7 @@ function setShipPositions() {
             }
         }
         playButton.style.display = 'none';
-        head.innerHTML = errShips + " - Incorrectly Set";
+        head.innerText = errShips + " - Incorrectly Set";
     }
 
     function setShipEndCoords(shipRect) {

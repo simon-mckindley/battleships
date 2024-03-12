@@ -157,6 +157,10 @@ h2 {
     display: block;
 }
 
+.ship {
+    transition: transform 300ms ease-in-out;
+}
+
 .board {
     display: grid;
     gap: 0.4vw;
